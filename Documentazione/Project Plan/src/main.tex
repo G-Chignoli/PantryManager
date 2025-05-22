@@ -1,0 +1,163 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{makecell}
+\usepackage[T1]{fontenc}
+\usepackage{minted}
+%\usepackage{tgpagella}      
+\usepackage[dvipsnames]{xcolor}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tgpagella} 
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\RequirePackage{fontawesome}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, 
+    linktoc=all,     
+    linkcolor=black!80,
+    filecolor=blue,
+    urlcolor=cyan!80
+}
+\renewcommand{\arraystretch}{1.4}
+
+\tcbset{%
+    theoLeft/.style={%
+        enhanced,
+        breakable,
+        sharp corners,
+        toprule=1mm, rightrule=0pt, bottomrule=1mm, leftrule=0pt,
+        colback=#1!5, colframe=white, coltitle=#1!80!black, 
+        detach title,
+        overlay unbroken and first ={
+            \node[minimum width=1cm, anchor=north west, font=\bfseries] 
+               at ([yshift={.4cm}]frame.north west) {\tcbtitle};
+        }
+    }
+}
+
+\definecolor{exampleBox}{RGB}{ 121, 54, 149  }
+
+\newtcbtheorem[auto counter]{code}{}
+{theoLeft=exampleBox}{cl}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{\Huge Project Plan}
+\author{Gabriele Chignoli}
+\date{Maggio 2025}
+\begin{document}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduzione}
+PantryManager è un applicativo che si propone di gestire l'inventario alimentare nell'ambito domestico. Un software che permetta di tener traccia di diversi dati riguardanti prodotti alimentari, aiutando l'utente a ridurre lo spreco, consumare prodotti sempre freschi, produrre pietanze più varie e mantenere quindi anche una dieta più equilibrata. \newline 
+
+Il team ha intenzione di produrre un software che renda la gestione dell' aspetto alimentare della vita dell'utente meno onerosa, occupandosi di tenere traccia della scorta delle vivande in possesso, per poi aiutare a costruire un piano alimentare giornaliero basato sui prodotti a disposizione, riducendo lo spreco e distribuendo in modo equilibrato i diversi macronutrienti nei pasti. Si vuole rendere inoltre tale processo il più personalizzabile possibile, fornendo così all'utente più autonomo dal punto di vista alimentare la possibilità di gestire in modo accurato la propria dieta.   
+\section{Modello di Processo}
+Il team si impegna a seguire un modello di processo principalmente tradizionale, basato sul modello a cascata, che utilizza l'aspetto "pesante" di tale processo per avere una visione generale del software che mantenga lo sviluppo entro binari ben definiti. Si ritiene tuttavia necessario ridurre la rigidità del processo, utilizzando anche tecniche di tipo evolutivo, per garantire l'evoluzione e la soddisfazione dei requisiti ad ogni passo del processo, soprattutto durante le fasi di design, implementazione e testing. L'argomento viene approfondito nella sezione \textit{1.1 Ciclo di Vita del Software} nella \textit{Documentazione}.
+\section{Organizzazione}
+Il progetto non entrerà in contatto con l'effettivo cliente a cui è destinato, né nella fase di elicitazione e validazione dei requisiti, né in fasi di test del software effettivo. L'unico tipo di feedback presente sarà quello dell'Università degli Studi di Bergamo, in particolare dal Professor ?? e la Professoressa ??, che forniranno in caso istruzioni di modifica per il miglioramento dell'applicativo e della sua documentazione.
+\section{Standard, Linee Guida, Procedure}
+\paragraph{Convenzioni di Nomenclatura}
+Vengono elencati di seguito gli standard adottati per la scrittura del codice (Java)
+\begin{center}
+    \begin{longtable}{cp{200pt}}
+        \toprule
+        \textbf{Componente} & \textbf{Convenzione} \\
+        \midrule
+        \textbf{Classi} & \textit{Pascal Case} -  i nomi iniziano con una lettera maiuscola. Se il nome contiene più parole, tutte le parole iniziano con una lettera maiuscola. \\
+        \textbf{Variabili} & \textit{Camel Case} - i nomi iniziano con una lettera minuscola. Se il nome contiene più parole, tutte le parole iniziano con una lettera maiuscola.  \\
+        \textbf{Costanti} & \textit{Full Uppercase} - tutte le lettere del nome sono maiuscole. Nel caso il nome fosse composto da più parole, queste si separano da "\_". \\
+        \dots & \dots \\
+        \bottomrule
+    \end{longtable}
+\end{center}
+
+\begin{code*}{Codice di Esempio}{}
+
+\begin{minted}{java}
+     public ClasseDiEsempio{
+        int variabile_di_esempio = 0;
+        const COSTANTE_DI_ESEMPIO;
+     }
+\end{minted}
+ 
+\end{code*}
+
+\begin{center}
+    \begin{longtable}{p{260pt}}
+        \toprule
+        \textbf{Altre Convenzioni} \\
+        \midrule
+        
+        \dots \\
+        \bottomrule
+    \end{longtable}
+\end{center}
+
+ \paragraph{Documentazione}
+     
+La documentazione verrà continuamente aggiornata e verificata, sia dal punto di vista della struttura che dei contenuti, per far sì che i documenti siano in linea con l'applicativo che si sta costruendo. I documenti verranno prodotti in Latex, e caricati in formato PDF su \textit{GitHub}; verranno caricati ogni qualvolta vengono eseguite modifiche rilevanti (non si prevede che vengano eseguiti commit per la correzione di semplici errori grammaticali). Quando i documenti saranno completi, verrà attribuita ad essi una versione, e verrà pubblicata un issue su \textit{GitHub} per l'accettazione. Verrà tenuta la cronologia delle versioni direttamente nel repository.  
+\section{Attività di Gestione}
+\label{sec:5}
+Il team si propone di stendere settimanalmente un breve report per riassumere il lavoro terminato durante i 7 giorni, le difficoltà riscontrate e i prospetti per la settimana seguente. Si intende inoltre tenere traccia dei requisiti soddisfatti durante tale periodo. Questi documenti non sono considerati vincolanti rispetto all'effettivo avanzamento dello sviluppo, ma vengono utilizzati per tener traccia del lavoro svolto, per una possibile analisi post completamento, e in caso, per enti esterni interessati al processo, fornendo così anche un lavoro di manutenzione preventiva.
+\section{Rischi}
+La principale preoccupazione riguarda la gestione del tempo e l'effettiva capacità di fornire una versione funzionante del software, con i requisiti fondamentali soddisfatti, entro la data di consegna del prodotto. \newline 
+
+Si prevede inoltre la possibilità dell'elicitazione di un eccessivo numero di requisiti, che, pur potendo portare del valore aggiunto all'applicazione, richiederebbero troppe risorse per essere implementate entro i limiti di consegna.  
+\section{Personale}
+Il team è composto attualmente da un solo membro; non sono pianificate (ma non sono precluse) espansioni di personale. Le principali aree di competenza richieste per lo sviluppo sono:
+\begin{itemize}
+    \item Sviluppo e design dell'interfaccia grafica (Front-end Developer)
+    \item Sviluppo e design dell'architettura  
+    \item Sviluppo e gestione della base di dati (Back-end Developer) 
+    \item Testing 
+\end{itemize}
+\section{Metodi e Tecniche}
+Il progetto prevede l'utilizzo di diverse tecnologie:
+\begin{itemize}
+    \item \href{http://www.github.com}{\underline{GitHub} \faExternalLink} per il controllo della versione
+    \item Latex (su piattaforma \href{https://www.overleaf.com}{\underline{Overleaf} \faExternalLink}) per la produzione della documentazione
+    \item \href{https://eclipseide.org/}{\underline{Eclipse} \faExternalLink} come IDE per la scrittura del codice 
+    \item \href{https://eclipse.dev/papyrus/}{\underline{Eclipse Papyrus} \faExternalLink} per la produzione dei diagrammi UML (Universal Modelling Language)
+    \item Il codice sarà scritto in Java, con il quale verranno utilizzate le tecnologie 
+    \begin{itemize}
+        \item \href{https://maven.apache.org/}{\underline{Apache Maven} \faExternalLink} per la gestione del progetto 
+        %\item log4j, 
+        \item \href{https://junit.org/junit5/}{\underline{JUnit} \faExternalLink} come framework per il testing 
+    \end{itemize}
+\end{itemize}
+L'hardware su cui si intende operare è una generica macchina PC, e il software dovrà essere eseguibile su qualsiasi altra macchina (con sistema operativo Windows 10/11*) senza alcun tipo di installazione aggiuntiva. \newline 
+
+\textit{*Il software non verrà prodotto e testato per funzionare su sistemi operativi diversi da Windows 10/11; non si assicura dunque il funzionamento su macchine con sistema operativo MacOS, Linux, Unix, etc.}
+\section{Garanzia di Qualità}
+Del software non verrà garantita la qualità secondo standard determinati, tuttavia il team intende seguire dei principi di qualità più approssimativi che guidino lo sviluppo del progetto. L'argomento viene approfondito nella sezione \textit{2.6 Requisiti} della \textit{Documentazione}.
+%tuttavia il team si impegna a garantire il rispetto dei seguenti requisiti di qualità:
+%\begin{itemize}
+%    \item Comprensibilità dell'interfaccia
+%    \item Reattività delle risposte agli input
+%    \item 
+%\end{itemize}
+\section{Pacchetti di Lavoro}
+Possiamo dividere le attività da svolgere in:
+\begin{itemize}
+    \item Scrittura della documentazione
+    \item Implementazione della logica dell'applicazione
+    \item Implementazione del data base locale
+    \item Implementazione dell'interfaccia utente
+    \item Testing
+\end{itemize}
+Data la presenza di un solo membro del team, il lavoro verrà gestito interamente da tale individuo. 
+\section{Risorse e Budget}
+Date le dimensioni del progetto e il ristretto personale coinvolto, non è prevista alcuna stima riguardante i requisiti hardware per lo sviluppo, e nessuna previsione sui costi (monetari e temporali) dell'intero processo.   
+\section{Cambiamenti}
+I cambiamenti più rilevanti, se riscontrati, saranno segnati nei report settimanali come già specificato nella sezione \hyperref[sec:5]{\textit{5 Attività di Gestione}}. In tali documenti sarà segnata la problematica riscontrata, la soluzione sviluppata e (in breve) il ragionamento che ha portato ad essa, così da aiutare con la comprensione nelle fasi di manutenzione future. 
+\section{Consegna}
+Il prodotto finale e tutta la sua documentazione verranno consegnati attraverso la piattaforma di \textit{GitHub}: in particolare il progetto dovrà essere terminato entro il giorno xx/xx/xxxx, mentre il Project Plan dovrà essere disponibile entro il giorno xx/xx/xxxx. Agli utenti verrà condiviso l'accesso alla repository del progetto, dalla quale sarà possibile scaricare l'applicativo ed eseguirlo in locale sulla propria macchina. 
+
+\end{document}
