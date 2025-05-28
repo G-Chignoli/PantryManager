@@ -33,7 +33,7 @@
 \tableofcontents
 \newpage
 
-\section{Requisiti}
+\section{Ingegneria dei Requisiti}
 In questa sezione vengono specificati i requisiti che sono risultati dalla fase di elicitazione. 
 \subsection{Elicitazione}
 I requisiti sono stati elicitati operando direttamente sul team di sviluppo poiché l'idea originale del software è nata da reali necessità riscontrate nella vita personale dei membri. Si può attribuire a tale metodologia un carattere etnografico, in cui lo sviluppatore ha vissuto in prima persona l'ambiente del cliente, ed è quindi in grado di avere una buona comprensione dei requisiti necessari, senza farsi confondere da "fischietti e campanelli".  
@@ -70,7 +70,7 @@ Viene illustrato nella \textit{Figure 1} il diagramma dei casi d'uso, volto a mo
     \begin{tabular}{p{50pt}p{300pt}}
     \toprule
          \textit{FUNZ} & Requisiti funzionali  \\
-         \textit{INT} & Requisiti di interfaccia  \\
+         \textit{GUI} & Requisiti dell'interfaccia grafica  \\
     \bottomrule
     \end{tabular} 
 \end{center}
@@ -139,8 +139,10 @@ Nella tabella dei requisiti della sezione $2.6$ viene specificata, oltre all'ID 
          \textit{FUNZ.10} & Il sistema dovrebbe permettere di impostare il numero di individui di cui vuole tenere traccia. & \could \\
          \textit{FUNZ.10.1} & Il sistema dovrebbe permettere di impostare l'obiettivo calorico giornaliero per ogni individuo.  & \could \\
          \textit{FUNZ.11} & Il sistema dovrebbe permettere di creare una \textit{Lista della spesa} in cui l'utente può aggiungere prodotti che ha intenzione/necessità di acquistare. & \could \\
-         \textit{FUNZ.12} & Il sistema dovrebbe permette di recuperare ricette attraverso un Servizio Web esterno, e proporle all'utente & \wont \\
-         \textit{FUNZ.13} &  &  \\
+         \textit{FUNZ.12} & Il sistema dovrebbe permette di recuperare ricette attraverso un Servizio Web esterno, e proporle all'utente. & \wont \\
+         \textit{FUNZ.13} & Il sistema dovrebbe notificare l'utente quando un prodotto sta per scadere. & \must \\
+         \textit{FUNZ.13.1} & La notifica verrà inviata ??? giorni prima della scadenza. & \should  \\
+         \textit{FUNZ.14} & Il sistema dovrebbe permettere all'utente di rimuovere velocemente i prodotti che ha utilizzato. & \should \\
          \bottomrule
     \end{longtable} 
 \end{center}
@@ -152,14 +154,37 @@ Nella tabella dei requisiti della sezione $2.6$ viene specificata, oltre all'ID 
         ID & Descrizione & Priorità \\
         \midrule
          \textit{GUI.1} & L'interfaccia utente dovrebbe rispondere in modo reattivo agli input dell'utente, fornendo un feedback visivo. & \should \\
-         \textit{GUI.2} & &  \\
-         \textit{GUI.3} & &  \\
-         \textit{GUI.4} & &  \\
+         \textit{GUI.2} & La data di scadenza dei prodotti sarà segnata \begin{itemize}
+             \item In giallo per i prodotti in scadenza (cioè a ??? giorni dalla data limite)
+             \item In rosso per i prodotti che hanno superato la data di scadenza
+         \end{itemize} & \should \\
+         \textit{GUI.3} & Il requisito \textit{FUNZ.14} dovrebbe essere soddisfatto ponendo un pulsante "+" e un pulsante "-" sotto le immagini dei prodotti. & \could \\
+         \textit{GUI.4} & L'interfaccia dovrebbe disporre di una schermata principale detta "Schermata Home" & \must  \\
+         \textit{GUI.4.1} & La Schermata Home dovrebbe mostrare i prodotti e disporli in un ordinamento a matrice o ad elenco. & \must \\
+         \textit{GUI.5} & In caso l'applicazione vada in background, o venga sospesa, quando viene riattivata deve tornare all'ultima schermata su cui era prima della sospensione. & \wont \\
          \bottomrule
     \end{tabular} 
 \end{center}
 
-\paragraph{Qualità}
+\section{UML}
+Si rappresentano di seguito i diagrammi UML delle Macchine a Stati Finiti che modellano alcune parti del software; in particolare vengono rappresentati gli stati in cui dovrebbe trovarsi l'interfaccia grafica per l'utente (GUI, \textit{Figure 2}), e i possibili stati di un prodotto della dispensa (\textit{Figure 3}). 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{imgs/GUISttMchnDgrm.png}
+    \caption{GUI State Machine Diagram}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{imgs/ProdottoSttMchnDgrm.png}
+    \caption{Product State Machine Diagram}
+    \label{fig:enter-label}
+\end{figure}
+
+\textit{\textcolor{black!60}{La visione dei modelli UML è disponibile anche dal repository Github del progetto.}}
+
+\section{Qualità del Software}
 Si è deciso di non adottare uno standard predefinito per la definizione dei requisiti di qualità, poiché si ritiene che l'effettiva verifica tecnica del soddisfacimento della qualità richiesta non risulti fattibile; si è comunque deciso di definire dei "principi" generici che mostrino gli obiettivi che hanno guidato lo sviluppo.
 
 \begin{itemize}
