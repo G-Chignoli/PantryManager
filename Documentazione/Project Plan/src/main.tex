@@ -63,7 +63,7 @@ Il team si impegna a seguire un modello di processo principalmente tradizionale,
 \section{Organizzazione}
 Il progetto non entrerà in contatto con l'effettivo cliente a cui è destinato, né nella fase di elicitazione e validazione dei requisiti, né in fasi di test del software effettivo. L'unico tipo di feedback presente sarà quello dell'Università degli Studi di Bergamo, in particolare dal Professor ?? e la Professoressa ??, che forniranno in caso istruzioni di modifica per il miglioramento dell'applicativo e della sua documentazione.
 \section{Standard, Linee Guida, Procedure}
-\paragraph{Convenzioni di Nomenclatura}
+\subsection{Convenzioni di Nomenclatura}
 Vengono elencati di seguito gli standard adottati per la scrittura del codice (Java)
 \begin{center}
     \begin{longtable}{cp{200pt}}
@@ -100,9 +100,28 @@ Vengono elencati di seguito gli standard adottati per la scrittura del codice (J
     \end{longtable}
 \end{center}
 
- \paragraph{Documentazione}
-     
-La documentazione verrà continuamente aggiornata e verificata, sia dal punto di vista della struttura che dei contenuti, per far sì che i documenti siano in linea con l'applicativo che si sta costruendo. I documenti verranno prodotti in Latex, e caricati in formato PDF su \textit{GitHub}; verranno caricati ogni qualvolta vengono eseguite modifiche rilevanti (non si prevede che vengano eseguiti commit per la correzione di semplici errori grammaticali). Quando i documenti saranno completi, verrà attribuita ad essi una versione, e verrà pubblicata un issue su \textit{GitHub} per l'accettazione. Verrà tenuta la cronologia delle versioni direttamente nel repository.  
+\subsection{Documentazione}    
+La documentazione verrà continuamente aggiornata e verificata, sia dal punto di vista della struttura che dei contenuti, per far sì che i documenti siano in linea con l'applicativo che si sta costruendo. I documenti verranno prodotti in Latex, e caricati in formato PDF su \textit{GitHub}; verranno caricati ogni qualvolta vengono eseguite modifiche rilevanti (non si prevede che vengano eseguiti commit per la correzione di semplici errori grammaticali). Quando i documenti saranno completi, verrà attribuita ad essi una versione, e verrà pubblicata un issue su \textit{GitHub} per l'accettazione. Verrà tenuta la cronologia delle versioni direttamente nel repository. 
+
+\subsubsection{Versioning}
+Per tenere traccia dei documenti PDF prodotti verrà utilizzata una pratica basta sul \textit{Semantic Versioning}, secondo la quale il nome di ogni file verrà seguito da un codice di tre cifre, separate da punti, che indicano rispettivamente (da sinistra verso destra) il grado della modifica operata sul documento, che può essere:
+\begin{itemize}
+    \item \textbf{Major} - aggiunta/rimozione di grandi sezioni, accettazione di parte del documento come completa\dots
+    \item \textbf{Minor} - aggiunta/rimozione di moderate parti di testo/diagrammi, riscrittura sezioni\dots
+    \item \textbf{Patch} - correzioni di ortografiche/di terminologia, piccoli cambiamenti grafici/di struttura\dots
+\end{itemize}
+
+\vspace{.3cm} 
+
+\begin{code*}{Esempio di nomenclatura file}{}
+\begin{center}
+Specifica\_dei\_requisiti 0.2.5
+\end{center}
+
+\end{code*}
+
+Si intende inoltre denotare i documenti ancora in continua revisione, e quindi non ancora nella prima versione accettata come finale, con la prima cifra impostata a 0 (zero). 
+
 \section{Attività di Gestione}
 \label{sec:5}
 Il team si propone di stendere settimanalmente un breve report per riassumere il lavoro terminato durante i 7 giorni, le difficoltà riscontrate e i prospetti per la settimana seguente. Si intende inoltre tenere traccia dei requisiti soddisfatti durante tale periodo. Questi documenti non sono considerati vincolanti rispetto all'effettivo avanzamento dello sviluppo, ma vengono utilizzati per tener traccia del lavoro svolto, per una possibile analisi post completamento, e in caso, per enti esterni interessati al processo, fornendo così anche un lavoro di manutenzione preventiva.
