@@ -1,2 +1,0 @@
-#File del progetto ECLIPSE
-.metadata/
