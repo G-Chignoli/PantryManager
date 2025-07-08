@@ -1,0 +1,24 @@
+2025-07-08 16:54:38.484 [main] ERROR controller.Product - CIAOOOOOONE
+2025-07-08 16:54:38.486 [main] DEBUG controller.Product - faojbfabwofai!
+2025-07-08 16:54:38.486 [main] INFO  controller.Product - We've just greeted the user!
+2025-07-08 16:54:38.487 [main] WARN  controller.Product - We've just greeted the user!
+2025-07-08 16:54:38.487 [main] ERROR controller.Product - We've just greeted the user!
+2025-07-08 16:54:38.487 [main] FATAL controller.Product - We've just greeted the user!
+2025-07-08 16:54:53.661 [main] ERROR controller.Product - CIAOOOOOONE
+2025-07-08 16:54:53.664 [main] DEBUG controller.Product - faojbfabwofai!
+2025-07-08 16:54:53.664 [main] INFO  controller.Product - We've just greeted the user!
+2025-07-08 16:54:53.668 [main] WARN  controller.Product - We've just greeted the user!
+2025-07-08 16:54:53.670 [main] ERROR controller.Product - We've just greeted the user!
+2025-07-08 16:54:53.670 [main] FATAL controller.Product - We've just greeted the user!
+2025-07-08 16:55:36.051 [main] ERROR controller.Product - CIAOOOOOONE
+2025-07-08 16:55:36.053 [main] DEBUG controller.Product - faojbfabwofai!
+2025-07-08 16:55:36.053 [main] INFO  controller.Product - We've just greeted the user!
+2025-07-08 16:55:36.054 [main] WARN  controller.Product - We've just greeted the user!
+2025-07-08 16:55:36.054 [main] ERROR controller.Product - We've just greeted the user!
+2025-07-08 16:55:36.054 [main] FATAL controller.Product - We've just greeted the user!
+2025-07-08 16:57:00.847 [main] ERROR controller.Product - CIAOOOOOONE
+2025-07-08 16:57:00.851 [main] DEBUG controller.Product - faojbfabwofai!
+2025-07-08 16:57:00.851 [main] INFO  controller.Product - We've just greeted the user!
+2025-07-08 16:57:00.851 [main] WARN  controller.Product - We've just greeted the user!
+2025-07-08 16:57:00.851 [main] ERROR controller.Product - We've just greeted the user!
+2025-07-08 16:57:00.851 [main] FATAL controller.Product - We've just greeted the user!
