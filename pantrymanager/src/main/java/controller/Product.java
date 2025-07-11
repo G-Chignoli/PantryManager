@@ -8,7 +8,7 @@ public class Product {
 	private String name = "";
 	private float weight = 0;
 	private short qty = 0;
-	private Date expirationDate = new Date();  
+	private Date expiration_date = new Date();  
 	private float calories = 0;
 	
 	private static Logger logger = LogManager.getLogger(Product.class);
@@ -23,7 +23,7 @@ public class Product {
 		this.weight = weight;
 		this.qty = qty;
 		this.calories = calories;
-		this.expirationDate = expirationDate; 
+		this.expiration_date = expirationDate; 
 	}
 	
 	public String getName() {
@@ -43,7 +43,7 @@ public class Product {
 	}
 	
 	public Date getExpirationDate() {
-		return expirationDate; 
+		return expiration_date; 
 	}
 	
 	public void setName(String name) {
@@ -61,6 +61,6 @@ public class Product {
 		this.calories = calories; 
 	}
 	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate; 
+		this.expiration_date = expirationDate; 
 	}
 }
