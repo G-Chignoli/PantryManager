@@ -1,0 +1,22 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- JDBC Database connection settings -->
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="connection.url">jdbc:h2:./src/main/java/database/PRODUCT</property>
+        <property name="connection.username">sa</property>
+        <property name="connection.password"></property>
+        
+        <!-- Echo the SQL to stdout -->
+        <property name="show_sql">true</property>
+        
+        <!-- Dialetto H2 -->
+    	<property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+        
+        <!-- Names the annotated entity class -->
+        <mapping class="controller.Product"/>
+        
+    </session-factory>
+</hibernate-configuration>

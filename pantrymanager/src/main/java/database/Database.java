@@ -4,34 +4,25 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 public class Database {
-	private static String jdbcURL = "jdbc:h2:./src/main/java/database/testdb";
+	private static String jdbcURL = "jdbc:h2:./src/main/java/database/PRODUCT";
 	private static String username = "sa";
 	private static String password = "";
-	private static Logger logger = LogManager.getLogger(dbTest.class);
+	private static Logger logger = LogManager.getLogger(Database.class);
 
 	public static void main(String[] args) {
 		try (Connection connection = DriverManager.getConnection(jdbcURL, username, password);
 				Statement stmt = connection.createStatement()) {
-			logger.debug("Database successfully created.");
-			//stmt.execute("CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(255))");
+			
+			logger.debug("Connected Successfully.");
+			
+			// Table Creation
+			stmt.execute("CREATE TABLE PRODUCT (id BIGINT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, weight INT, qty INT, expiration_date DATE, calories FLOAT)");
+			
 			logger.debug("Table created.");
-			stmt.execute("INSERT INTO users (id, name) VALUES (14, 'Luigi Rossi')");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-	}
-	
-	static String getJdbcURL() {
-		return jdbcURL;
-	}
-	
-	static String getUsername() {
-		return username;
-	}
-	
-	static String getPassword() {
-		return password;
+		} 
 	}
 
 }
