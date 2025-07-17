@@ -8,15 +8,21 @@
         <property name="connection.url">jdbc:h2:./src/main/java/database/PRODUCT</property>
         <property name="connection.username">sa</property>
         <property name="connection.password"></property>
+        <property name="connection.pool_size">10</property>
         
         <!-- Echo the SQL to stdout -->
         <property name="show_sql">true</property>
         
         <!-- Dialetto H2 -->
     	<property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
-        
+    	
+    	<!-- Enable Hibernate's automatic session context management -->
+    	<property name="current_session_context_class">thread</property>
+    	
         <!-- Names the annotated entity class -->
         <mapping class="controller.Product"/>
+        <mapping class="util.HibernateUtil"/>
+        <mapping class="controller.Application"/>
         
     </session-factory>
 </hibernate-configuration>

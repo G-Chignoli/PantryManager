@@ -12,17 +12,12 @@ public class Database {
 	public static void main(String[] args) {
 		try (Connection connection = DriverManager.getConnection(jdbcURL, username, password);
 				Statement stmt = connection.createStatement()) {
-			
 			logger.debug("Connected Successfully.");
-			
-			// Table Creation
 			stmt.execute("CREATE TABLE PRODUCT (id BIGINT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, weight INT, qty INT, expiration_date DATE, calories FLOAT)");
-			
 			logger.debug("Table created.");
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Something went wrong!");
 		} 
 	}
-
 }
