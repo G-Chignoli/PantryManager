@@ -14,7 +14,7 @@ public class HibernateUtil {
 	  
       if (session_factory == null) {
           try {
-        	  configuration = new Configuration().configure().addAnnotatedClass(controller.Product.class) ;
+        	  configuration = new Configuration().configure().addAnnotatedClass(model.Product.class) ;
         	  service_registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build(); 
         	  session_factory = configuration.buildSessionFactory(service_registry);
         	  
