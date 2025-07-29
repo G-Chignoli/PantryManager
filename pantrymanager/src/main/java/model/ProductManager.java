@@ -27,7 +27,7 @@ public class ProductManager {
 	
 	public static void main(String[] args) {
 		OperationMode operation = OperationMode.NULL;
-		Product product = new Product("Carote", 2f, 20, 220, LocalDate.now());
+		Product product = new Product("Carote", 2f, 0, 0, LocalDate.now());
 		
 		
         EntityManagerFactory entity_manager_factory;
@@ -46,7 +46,7 @@ public class ProductManager {
 				    DeleteProduct(entity_manager, product);
 			    break;
 			  case OperationMode.MODIFY:
-				  entity_manager.merge(product);			    
+				  	ModifyProduct(entity_manager, product);
 				break;
 			  default:
 			}
@@ -59,9 +59,19 @@ public class ProductManager {
 		} 
 	}
 	
+	private static void ModifyProduct(EntityManager em, Product p) {
+		try {
+			  Product to_change = FindProductByName(em, p.getName()).get(0);
+			  p.setId(to_change.getId());
+			  em.merge(p);
+		} catch (Exception e) {
+			logger.error("Impossibile modificare il prodotto.");
+		}		
+	}
+
 	private static void DeleteProduct(EntityManager em, Product p) {
 		try {
-			  em.remove(FindProductByName(em, p.getName()).get(0));			  
+			em.remove(FindProductByName(em, p.getName()).get(0));			  
 		} catch (Exception e) {
 			logger.error("Impossibile eliminare il prodotto.");
 		}			
@@ -70,7 +80,6 @@ public class ProductManager {
 	private static void SaveProduct(EntityManager entity_manager, Product p) {
 		try {
 			entity_manager.persist(p);
-			
 		} catch (Exception e) {
 			logger.error("Impossibile salvare il prodotto.");
 		}
@@ -85,6 +94,4 @@ public class ProductManager {
 		
 		return em.createQuery(criteria).getResultList();
 	}
-	/*
-	 */
 }

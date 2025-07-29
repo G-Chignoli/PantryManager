@@ -70,7 +70,7 @@ public class Product {
 		return expiration_date; 
 	}
 	
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id; 
 	}
 
