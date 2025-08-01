@@ -40,13 +40,13 @@ public class ProductManager {
 			
 			switch(operation) {
 			  case OperationMode.SAVE:
-				  SaveProduct(entity_manager, product);
+				  saveProduct(entity_manager, product);
 			    break;
 			  case OperationMode.DELETE:				  
-				    DeleteProduct(entity_manager, product);
+				    deleteProduct(entity_manager, product);
 			    break;
 			  case OperationMode.MODIFY:
-				  	ModifyProduct(entity_manager, product);
+				  	modifyProduct(entity_manager, product);
 				break;
 			  default:
 			}
@@ -59,9 +59,9 @@ public class ProductManager {
 		} 
 	}
 	
-	private static void ModifyProduct(EntityManager em, Product p) {
+	private static void modifyProduct(EntityManager em, Product p) {
 		try {
-			  Product to_change = FindProductByName(em, p.getName()).get(0);
+			  Product to_change = findProductByName(em, p.getName()).get(0);
 			  p.setId(to_change.getId());
 			  em.merge(p);
 		} catch (Exception e) {
@@ -69,15 +69,15 @@ public class ProductManager {
 		}		
 	}
 
-	private static void DeleteProduct(EntityManager em, Product p) {
+	private static void deleteProduct(EntityManager em, Product p) {
 		try {
-			em.remove(FindProductByName(em, p.getName()).get(0));			  
+			em.remove(findProductByName(em, p.getName()).get(0));			  
 		} catch (Exception e) {
 			logger.error("Impossibile eliminare il prodotto.");
 		}			
 	}
 
-	private static void SaveProduct(EntityManager entity_manager, Product p) {
+	private static void saveProduct(EntityManager entity_manager, Product p) {
 		try {
 			entity_manager.persist(p);
 		} catch (Exception e) {
@@ -85,7 +85,7 @@ public class ProductManager {
 		}
 	}
 	
-	public static List<Product> FindProductByName(EntityManager em, String name){
+	public static List<Product> findProductByName(EntityManager em, String name){
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
 		Root<Product> root = criteria.from(Product.class);
