@@ -20,7 +20,7 @@
     	<property name="current_session_context_class">thread</property>
     	
         <!-- Names the annotated entity class -->
-        <mapping class="controller.Product"/>
+        <mapping class="model.Product"/>
         <mapping class="util.HibernateUtil"/>
         <mapping class="controller.Application"/>
         

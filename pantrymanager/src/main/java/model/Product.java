@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 import java.time.LocalDate;
 import jakarta.persistence.Column;
@@ -16,22 +16,22 @@ public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	protected long id;
 	
 	@Column(name = "name", nullable = false)
-	private String name;
+	protected String name;
 	
 	@Column(name = "weight")
-	private float weight;
+	protected float weight;
 
 	@Column(name = "qty")
-	private int qty;
+	protected int qty;
 
 	@Column(name = "expiration_date")
-	private LocalDate expiration_date;  
+	protected LocalDate expiration_date;  
 
 	@Column(name = "calories")
-	private float calories;
+	protected float calories;
 	
 	public Product() {
 		
@@ -44,6 +44,7 @@ public class Product {
 		this.calories = calories;
 		this.expiration_date = expiration_date; 
 	}
+	
 	
 	public long getId() {
 		return id; 
@@ -69,7 +70,7 @@ public class Product {
 		return expiration_date; 
 	}
 	
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id; 
 	}
 
