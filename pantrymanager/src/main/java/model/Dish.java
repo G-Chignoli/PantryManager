@@ -1,11 +1,17 @@
 package model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import org.hibernate.annotations.Type;
+
 
 @Entity
 @Table(name = "DISH")
@@ -17,15 +23,17 @@ public class Dish {
 	
 	@Column(name = "name", nullable = false)
 	protected String name; 
-
+	
+	@Embedded
+	@ElementCollection
 	@Column(name = "ingredients")
-	protected String[] ingredients;
+	protected Ingredient[] ingredients;
 	
 	public Dish() {
 		
 	}
 	
-	public Dish(String name, String[] ingredients) {
+	public Dish(String name, Ingredient[] ingredients) {
 		this.name = name;
 		this.ingredients = ingredients;
 	}
@@ -47,15 +55,16 @@ public class Dish {
 		this.name = name;
 	}
 	
-	public String[] getIngredients() {
+	public Ingredient[] getIngredients() {
 		return ingredients;
 	}
 	
-	public void setIngredients(String[] ingredients) {
+	public void setIngredients(Ingredient[] ingredients) {
 		this.ingredients = ingredients;
 	}
-	
+	/*
 	public String getIngredient(int i) {
 		return ingredients[i];
 	}
+	*/
 }
