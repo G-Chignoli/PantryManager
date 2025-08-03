@@ -24,33 +24,38 @@ import org.apache.logging.log4j.LogManager;
 
 public class ProductManager {
 	public static Logger logger = LogManager.getLogger(ProductManager.class);
-	
+	/*
+	 */
+	private static EntityManagerFactory entity_manager_factory	= Persistence.createEntityManagerFactory("product");
+	private static EntityManager entity_manager = entity_manager_factory.createEntityManager();
 	public static void main(String[] args) {
-		OperationMode operation = OperationMode.NULL;
-		Product product = new Product("Carote", 2f, 0, 0, LocalDate.now());
-		
-		
-        EntityManagerFactory entity_manager_factory;
+		OperationMode operation = OperationMode.SAVE;
+		Product product = new Product("cipolle", 2f, 0, 0, LocalDate.now());
+		/*
+		EntityManagerFactory entity_manager_factory;
 		EntityManager entity_manager;
+		*/
+		
 		try {
+			/*
 			entity_manager_factory = Persistence.createEntityManagerFactory("product");
 			entity_manager = entity_manager_factory.createEntityManager();
+			*/
 			
 			entity_manager.getTransaction().begin();
 			
 			switch(operation) {
 			  case OperationMode.SAVE:
-				  saveProduct(entity_manager, product);
+				  saveProduct(product);
 			    break;
 			  case OperationMode.DELETE:				  
-				    deleteProduct(entity_manager, product);
+				    deleteProduct(product);
 			    break;
 			  case OperationMode.MODIFY:
-				  	modifyProduct(entity_manager, product);
+				  	modifyProduct(product);
 				break;
 			  default:
 			}
-			
 			entity_manager.getTransaction().commit();
 			entity_manager_factory.close();
 			
@@ -59,25 +64,25 @@ public class ProductManager {
 		} 
 	}
 	
-	private static void modifyProduct(EntityManager em, Product p) {
+	private static void modifyProduct(Product p) {
 		try {
-			  Product to_change = findProductByName(em, p.getName()).get(0);
+			  Product to_change = findProductByName(p.getName()).get(0);
 			  p.setId(to_change.getId());
-			  em.merge(p);
+			  entity_manager.merge(p);
 		} catch (Exception e) {
 			logger.error("Impossibile modificare il prodotto.");
 		}		
 	}
 
-	private static void deleteProduct(EntityManager em, Product p) {
+	private static void deleteProduct(Product p) {
 		try {
-			em.remove(findProductByName(em, p.getName()).get(0));			  
+			entity_manager.remove(findProductByName(p.getName()).get(0));			  
 		} catch (Exception e) {
 			logger.error("Impossibile eliminare il prodotto.");
 		}			
 	}
 
-	private static void saveProduct(EntityManager entity_manager, Product p) {
+	private static void saveProduct(Product p) {
 		try {
 			entity_manager.persist(p);
 		} catch (Exception e) {
@@ -85,13 +90,13 @@ public class ProductManager {
 		}
 	}
 	
-	public static List<Product> findProductByName(EntityManager em, String name){
-		CriteriaBuilder builder = em.getCriteriaBuilder();
+	public static List<Product> findProductByName(String name){
+		CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 		CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
 		Root<Product> root = criteria.from(Product.class);
 		
 		criteria.select(root).where(builder.equal(root.get("name"), name ));
 		
-		return em.createQuery(criteria).getResultList();
+		return entity_manager.createQuery(criteria).getResultList();
 	}
 }
