@@ -25,17 +25,28 @@ public class DishManager {
 	public static Logger logger = LogManager.getLogger(DishManager.class);
 	private static EntityManagerFactory entity_manager_factory = Persistence.createEntityManagerFactory("dish");
 	private static EntityManager entity_manager = entity_manager_factory.createEntityManager();
+	private static CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 
 	public static void main(String[] args) {
 
-		
+
 		try {
-			/*
-			entity_manager_factory = Persistence.createEntityManagerFactory("dish");
-			entity_manager = entity_manager_factory.createEntityManager();
-			*/
 			entity_manager.getTransaction().begin();
-						
+
+			/*
+			String[] ing = {"carote", "sale", "pepe"};
+			entity_manager.persist(new Dish("Carote al forno".toLowerCase(), ing));
+			String[] ing2 = {"cipolle", "zucchero"};
+			entity_manager.persist(new Dish("ciPollE Caramellate".toLowerCase(), ing2));
+			String[] ing3 = {"cipolle"};
+			entity_manager.persist(new Dish("ciPoLLE".toLowerCase(), ing3));
+			 */
+			
+			String[] ing = getDishByName("").getIngredients();
+			for(int i = 0; i < ing.length ; i++) {
+				logger.warn(ing[i]);
+			}
+			
 			entity_manager.getTransaction().commit();
 			entity_manager_factory.close();
 
@@ -44,18 +55,26 @@ public class DishManager {
 		} 
 	}
 	
-	public static List<Dish> getDishes(EntityManager em) {
-		CriteriaBuilder builder = em.getCriteriaBuilder();
+	public static List<Dish> getDishes() {
+		CriteriaQuery<Dish> criteria = builder.createQuery(Dish.class);
+		Root<Dish> root = criteria.from(Dish.class);
+
+		criteria.select(root);
+
+		return entity_manager.createQuery(criteria).getResultList();
+	}
+	
+	public static Dish getDishByName(String name) {
 		CriteriaQuery<Dish> criteria = builder.createQuery(Dish.class);
 		Root<Dish> root = criteria.from(Dish.class);
 		
-		criteria.select(root);
+		criteria.where(builder.like(root.get("name"), name.toLowerCase().concat("%")));
 		
-		return em.createQuery(criteria).getResultList();
+		return entity_manager.createQuery(criteria).getSingleResultOrNull();
 	}
-	
+
 	public static boolean checkForIngredient(String name) {
 		return !ProductManager.findProductByName(name).isEmpty();
 	}
-	
+
 }

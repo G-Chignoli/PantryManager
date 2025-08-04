@@ -15,7 +15,7 @@ public class Dish {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
 	
-	@Column(name = "name", nullable = false)
+	@Column(name = "name", nullable = false, unique = true)
 	protected String name; 
 
 	@Column(name = "ingredients")
