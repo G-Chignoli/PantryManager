@@ -1,13 +1,7 @@
 package model;
 
-import util.HibernateUtil;
-
 import java.time.LocalDate;
 import java.util.List;
-
-import org.hibernate.Session;
-
-import database.Database;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -15,33 +9,19 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-import jakarta.persistence.metamodel.EntityType;
-import jakarta.persistence.metamodel.Metamodel;
-
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 
 public class ProductManager {
 	public static Logger logger = LogManager.getLogger(ProductManager.class);
-	/*
-	 */
 	private static EntityManagerFactory entity_manager_factory	= Persistence.createEntityManagerFactory("product");
 	private static EntityManager entity_manager = entity_manager_factory.createEntityManager();
 	public static void main(String[] args) {
-		OperationMode operation = OperationMode.SAVE;
+		OperationMode operation = OperationMode.NULL;
 		Product product = new Product("cipolle", 2f, 0, 0, LocalDate.now());
-		/*
-		EntityManagerFactory entity_manager_factory;
-		EntityManager entity_manager;
-		*/
 		
 		try {
-			/*
-			entity_manager_factory = Persistence.createEntityManagerFactory("product");
-			entity_manager = entity_manager_factory.createEntityManager();
-			*/
-			
 			entity_manager.getTransaction().begin();
 			
 			switch(operation) {
@@ -56,6 +36,7 @@ public class ProductManager {
 				break;
 			  default:
 			}
+			
 			entity_manager.getTransaction().commit();
 			entity_manager_factory.close();
 			
