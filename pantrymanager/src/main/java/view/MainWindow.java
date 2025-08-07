@@ -46,8 +46,8 @@ public class MainWindow{
 	    	
 	    	panel = new JPanel();
 	    	panel.setBackground(new Color(173,216,230));
-	    	label = new JLabel("Nome prodotto");
-	    	p1 = new JLabel();
+	    	//label = new JLabel("Nome prodotto");
+	    	p1 = new JLabel(ProductManager.getProducts().getFirst().getName().toUpperCase());
 	    	p2 = new JLabel();
 	    	textField = new JTextField(20);
 	    	button = new JButton("SALVA");
@@ -60,7 +60,8 @@ public class MainWindow{
 	    	
 	    	button2.addActionListener(al2);
 	    	
-	    	panel.add(label);
+	    	//panel.add(label);
+	    	panel.add(p1);
 	    	panel.add(textField);
 	    	panel.add(button);
 	    	panel.add(button2);

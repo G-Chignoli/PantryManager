@@ -9,18 +9,18 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
+
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-
 
 public class ProductManager {
 	public static Logger logger = LogManager.getLogger(ProductManager.class);
 	private static EntityManagerFactory entity_manager_factory	= Persistence.createEntityManagerFactory("product");
 	private static EntityManager entity_manager = entity_manager_factory.createEntityManager();
-	public static void main(String[] args) {
-		OperationMode operation = OperationMode.NULL;
-		Product product = new Product("cipolle", 2f, 0, 0, LocalDate.now());
-		
+	private static CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
+	
+	private static void run(OperationMode operation, Product product) {
 		try {
 			entity_manager.getTransaction().begin();
 			
@@ -34,6 +34,9 @@ public class ProductManager {
 			  case OperationMode.MODIFY:
 				  	modifyProduct(product);
 				break;
+			  case OperationMode.GET:
+				  getProducts();
+				  break;
 			  default:
 			}
 			
@@ -71,8 +74,15 @@ public class ProductManager {
 		}
 	}
 	
+	public static List<Product> getProducts() {
+		CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
+		Root<Product> root = criteria.from(Product.class);
+
+		criteria.select(root);
+		return entity_manager.createQuery(criteria).getResultList();
+	}
+	
 	public static List<Product> findProductByName(String name){
-		CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 		CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
 		Root<Product> root = criteria.from(Product.class);
 		
