@@ -9,41 +9,38 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import javax.swing.BoxLayout;
+
+import javax.swing.Action;
 import net.miginfocom.swing.MigLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.CardLayout;
-import java.awt.FlowLayout;
-import java.awt.Insets;
-import javax.swing.JScrollPane;
 import java.awt.Color;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
+
 import javax.swing.JTextField;
-import javax.swing.JTable;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class MainWindow {
 
 	private JFrame main_frame;
 	private JTextField p_search;
+	public static String last_comp_hovered = null;
 
 	public void initialize() {
 		main_frame = new JFrame();
 		main_frame.setResizable(false);
 		main_frame.setTitle("PantryManager");
-		main_frame.setBounds(100, 100, 1346, 729);
+		main_frame.setBounds(100, 100, 1300, 730);
 		main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main_frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
+		//main_frame.setLayout(new MigLayout("", "[300.00px][1000.00px]"));
+		
+		JPanel[][] panels = new JPanel[3][3];
+		JLabel[][] labels = new JLabel[3][3];
+		JButton[][] buttons = new JButton[3][3];
+		Action add_action = new AddAction();
+		RemoveButtonAction rmv_action = new RemoveButtonAction();
+		
 		
 		JPanel profile_pl = new JPanel();
 		main_frame.getContentPane().add(profile_pl);
@@ -87,45 +84,67 @@ public class MainWindow {
 		product_pl.add(products_pl, "cell 0 2 5 3,grow");
 		products_pl.setLayout(new MigLayout("", "[170px][170px][170px]", "[170px][170px][170px]"));
 		
-		productsMatrixInit(products_pl);
+		//productsMatrixInit(products_pl, panels, labels);
 		
-		// Products Matrix Initialization
-		/*
-		JPanel[][] panels = new JPanel[3][3];
-		JLabel[][] labels = new JLabel[3][3];
-		// i colonne
-		// j righe
+		
+		
+		//System.out.println(add.getRootPane());
+		
+		
+		
 		int color = 255;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				JPanel p = new JPanel();
-				JLabel name = new JLabel("Nome Prodotto" + color);
+				JLabel name = new JLabel("Nome Prodotto " + i + j);
 				JLabel qty = new JLabel("2");
-				JButton add = new JButton("+");
-				JButton remove = new JButton("-");
+				JButton add = new JButton(add_action);
+				JButton remove = new JButton(rmv_action);
 				
+				
+				p.setName("p" + i + j);
 				p.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
-				p.setBackground(new Color(color, color, color));
+				p.setBackground(new Color(color, color, 255));
 				p.setOpaque(true);
+				
+				/*
+				add.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						System.out.println(e.getComponent().getParent().getName());
+					}
+				});
+				*/
+				
+				p.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						//System.out.println(e.getComponent().getName());
+						last_comp_hovered = e.getComponent().getName();
+					}
+				});
 				
 				panels[i][j] = p;
 				labels[i][j] = name;
+				buttons[i][j] = add;
 
-				p.add(name, "cell 1 0, alignx center, aligny center");
-				p.add(add, "cell 0 1, grow, alignx center, aligny center");
+
+				p.add(name, "cell 0 0 3 1, alignx center, aligny center");
+				p.add(add, "cell 2 1, grow, alignx center, aligny center");
 				p.add(qty, "cell 1 1, alignx center, aligny center");
-				p.add(remove, "cell 2 1, grow, alignx center, aligny center");
+				p.add(remove, "cell 0 1, grow, alignx center, aligny center");
 				products_pl.add(p, "cell " + j + " " + i +  ", grow");
 				
 				color -= 30;
 			}
 		}
-		*/		
 	}
 	
-	private void productsMatrixInit(JPanel products_pl) {
-		JPanel[][] panels = new JPanel[3][3];
-		JLabel[][] labels = new JLabel[3][3];
+	
+	/*
+	private void productsMatrixInit(JPanel products_pl, JPanel[][] panels, JLabel[][] labels) {
+		//JPanel[][] panels = new JPanel[3][3];
+		//JLabel[][] labels = new JLabel[3][3];
 		// i colonne
 		// j righe
 		int color = 255;
@@ -134,11 +153,11 @@ public class MainWindow {
 				JPanel p = new JPanel();
 				JLabel name = new JLabel("Nome Prodotto " + color);
 				JLabel qty = new JLabel("2");
-				JButton add = new JButton("+");
+				JButton add = new JButton(add_Action);
 				JButton remove = new JButton("-");
 				
 				p.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
-				p.setBackground(new Color(color, color, color));
+				p.setBackground(new Color(color, color, 255));
 				p.setOpaque(true);
 				
 				panels[i][j] = p;
@@ -155,11 +174,15 @@ public class MainWindow {
 		}
 	}
 	
+	 */
     public void show() {
     	this.main_frame.setVisible(true);
     	
     }
     
+    public static String getLastCompHovered() {
+    	return last_comp_hovered;
+    }
 }
 /*
 
