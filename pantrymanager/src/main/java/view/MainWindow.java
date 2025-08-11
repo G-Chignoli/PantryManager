@@ -80,29 +80,17 @@ public class MainWindow {
 		JButton p_search_right = new JButton("-->");
 		product_pl.add(p_search_right, "cell 4 0 1 2,grow");
 		
-		// PRODUCTS MATRIX PANEL
+		// Products Matrix Panel
 		
 		JPanel products_pl = new JPanel();
 		products_pl.setBackground(new Color(192, 192, 192));
 		product_pl.add(products_pl, "cell 0 2 5 3,grow");
 		products_pl.setLayout(new MigLayout("", "[170px][170px][170px]", "[170px][170px][170px]"));
 		
-		// PRODUCT in 0-0
+		productsMatrixInit(products_pl);
 		
-		JPanel p1_pl = new JPanel();
-		//products_pl.add(p1_pl, "cell 0 0,grow");
-		p1_pl.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
-		
-		JLabel p_1_name = new JLabel("NOME PRODOTTO");
-		p1_pl.add(p_1_name, "cell 0 0 3 1,alignx center");
-		
-		JLabel p1_qty = new JLabel("Unità");
-		p1_pl.add(p1_qty, "cell 1 1,alignx center");
-		
-		
-		
-		// Product Matrix Initialization
-		
+		// Products Matrix Initialization
+		/*
 		JPanel[][] panels = new JPanel[3][3];
 		JLabel[][] labels = new JLabel[3][3];
 		// i colonne
@@ -111,7 +99,7 @@ public class MainWindow {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				JPanel p = new JPanel();
-				JLabel name = new JLabel("" + color);
+				JLabel name = new JLabel("Nome Prodotto" + color);
 				JLabel qty = new JLabel("2");
 				JButton add = new JButton("+");
 				JButton remove = new JButton("-");
@@ -131,7 +119,40 @@ public class MainWindow {
 				
 				color -= 30;
 			}
-		}		
+		}
+		*/		
+	}
+	
+	private void productsMatrixInit(JPanel products_pl) {
+		JPanel[][] panels = new JPanel[3][3];
+		JLabel[][] labels = new JLabel[3][3];
+		// i colonne
+		// j righe
+		int color = 255;
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				JPanel p = new JPanel();
+				JLabel name = new JLabel("Nome Prodotto " + color);
+				JLabel qty = new JLabel("2");
+				JButton add = new JButton("+");
+				JButton remove = new JButton("-");
+				
+				p.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
+				p.setBackground(new Color(color, color, color));
+				p.setOpaque(true);
+				
+				panels[i][j] = p;
+				labels[i][j] = name;
+
+				p.add(name, "cell 0 0 3 1, alignx center, aligny center");
+				p.add(add, "cell 0 1, grow, alignx center, aligny center");
+				p.add(qty, "cell 1 1, alignx center, aligny center");
+				p.add(remove, "cell 2 1, grow, alignx center, aligny center");
+				products_pl.add(p, "cell " + j + " " + i +  ", grow");
+				
+				color -= 30;
+			}
+		}
 	}
 	
     public void show() {
