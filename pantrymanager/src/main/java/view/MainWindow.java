@@ -2,8 +2,149 @@ package view;
 
 import model.ProductManager;
 
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import java.awt.GridLayout;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import javax.swing.BoxLayout;
+import net.miginfocom.swing.MigLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.CardLayout;
+import java.awt.FlowLayout;
+import java.awt.Insets;
+import javax.swing.JScrollPane;
+import java.awt.Color;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTextField;
+import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+
+public class MainWindow {
+
+	private JFrame main_frame;
+	private JTextField p_search;
+
+	public void initialize() {
+		main_frame = new JFrame();
+		main_frame.setResizable(false);
+		main_frame.setTitle("PantryManager");
+		main_frame.setBounds(100, 100, 1346, 729);
+		main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		main_frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel profile_pl = new JPanel();
+		main_frame.getContentPane().add(profile_pl);
+		profile_pl.setLayout(new MigLayout("", "[][][][180.00px,grow][][]", "[][][][][][][][][][][grow]"));
+		
+		JLabel profile_title = new JLabel("PROFILI");
+		profile_pl.add(profile_title, "cell 3 0,alignx center,aligny top");
+		
+		JPanel product_add = new JPanel();
+		profile_pl.add(product_add, "cell 1 9 5 2,grow");
+		
+		JLabel lblNewLabel = new JLabel("Aggiungi Prodotto");
+		product_add.add(lblNewLabel);
+		
+		JPanel product_pl = new JPanel();
+		main_frame.getContentPane().add(product_pl);
+		product_pl.setLayout(new MigLayout("", "[100px:n:100px,grow][100px:n:100px,grow][195px:n:195px,grow][100px:n:100px,grow][100px:n:100px,grow]", "[grow][][grow][grow][grow][]"));
+		
+		JLabel product_title = new JLabel("PRODOTTI");
+		product_title.setBackground(new Color(128, 128, 255));
+		product_pl.add(product_title, "cell 2 0,alignx center,aligny top");
+		
+		JButton p_search_left = new JButton("<--");
+		product_pl.add(p_search_left, "cell 0 0 1 2,grow");
+		
+		p_search = new JTextField();
+		p_search.setText("Cerca prodotto");
+		product_pl.add(p_search, "cell 1 1 2 1,grow");
+		p_search.setColumns(10);
+		
+		JButton p_search_send = new JButton("Invia");
+		product_pl.add(p_search_send, "cell 3 1,growx,aligny center");
+		
+		JButton p_search_right = new JButton("-->");
+		product_pl.add(p_search_right, "cell 4 0 1 2,grow");
+		
+		// PRODUCTS MATRIX PANEL
+		
+		JPanel products_pl = new JPanel();
+		products_pl.setBackground(new Color(192, 192, 192));
+		product_pl.add(products_pl, "cell 0 2 5 3,grow");
+		products_pl.setLayout(new MigLayout("", "[170px][170px][170px]", "[170px][170px][170px]"));
+		
+		// PRODUCT in 0-0
+		
+		JPanel p1_pl = new JPanel();
+		//products_pl.add(p1_pl, "cell 0 0,grow");
+		p1_pl.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
+		
+		JLabel p_1_name = new JLabel("NOME PRODOTTO");
+		p1_pl.add(p_1_name, "cell 0 0 3 1,alignx center");
+		
+		JLabel p1_qty = new JLabel("Unità");
+		p1_pl.add(p1_qty, "cell 1 1,alignx center");
+		
+		
+		
+		// Product Matrix Initialization
+		
+		JPanel[][] panels = new JPanel[3][3];
+		JLabel[][] labels = new JLabel[3][3];
+		// i colonne
+		// j righe
+		int color = 255;
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				JPanel p = new JPanel();
+				JLabel name = new JLabel("" + color);
+				JLabel qty = new JLabel("2");
+				JButton add = new JButton("+");
+				JButton remove = new JButton("-");
+				
+				p.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
+				p.setBackground(new Color(color, color, color));
+				p.setOpaque(true);
+				
+				panels[i][j] = p;
+				labels[i][j] = name;
+
+				p.add(name, "cell 1 0, alignx center, aligny center");
+				p.add(add, "cell 0 1, grow, alignx center, aligny center");
+				p.add(qty, "cell 1 1, alignx center, aligny center");
+				p.add(remove, "cell 2 1, grow, alignx center, aligny center");
+				products_pl.add(p, "cell " + j + " " + i +  ", grow");
+				
+				color -= 30;
+			}
+		}		
+	}
+	
+    public void show() {
+    	this.main_frame.setVisible(true);
+    	
+    }
+    
+}
+/*
+
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -14,13 +155,13 @@ import javax.swing.*;
 public class MainWindow{
 		
 		private JFrame frame;
-		private JPanel panel;
-		private JLabel label;
-		private JLabel p1;
-		private JLabel p2;
+		private JPanel left_panel;
+		private JPanel title_panel;
+		
+		private JLabel product_title;
 		private JTextField textField;
-		private JButton button;
-		private JButton button2;
+		private JButton save_b;
+		private JButton delete_b;
 		
 		private static final int WIDTH = 1200;
 		private static final int HEIGHT = 700;
@@ -38,35 +179,48 @@ public class MainWindow{
 	    	frame = new JFrame();
 	    	frame.setTitle("PantryManager");
 	    	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	    	//frame.setBounds(0, 0, WIDTH, HEIGHT);
 	    	frame.setSize(WIDTH, HEIGHT);
 	    	frame.setLayout(new BorderLayout(10,10));
-	    	//frame.setResizable(false);
 	    	frame.setLocationRelativeTo(null);
+
+	    	//frame.setBounds(0, 0, WIDTH, HEIGHT);
+	    	//frame.setResizable(false);
 	    	
-	    	panel = new JPanel();
-	    	panel.setBackground(new Color(173,216,230));
+	    	//PANEL SETUP
+	    	left_panel = new JPanel(new BorderLayout());
+	    	left_panel.setBackground(new Color(215,216,230));
+	    	title_panel = new JPanel(new BorderLayout());
+	    	title_panel.setBackground(new Color(200,200,200));
+	    	
+	    	
+	    	//BUTTON SETUP
+	    	save_b = new JButton("SAVE");
+	    	save_b.setPreferredSize(new Dimension(100, 100));
+	    	delete_b = new JButton("DELETE");
+	    	delete_b.setPreferredSize(new Dimension(100, 100));
+	    	
+	    	//LABEL SETUP
+	    	product_title = new JLabel("PRODOTTI");
+	    	
+	    	
+	    	//panel = new JPanel();
+	    	//panel.setBackground(new Color(173,216,230));
 	    	//label = new JLabel("Nome prodotto");
-	    	p1 = new JLabel(ProductManager.getProducts().getFirst().getName().toUpperCase());
-	    	p2 = new JLabel();
+	    	//p1 = new JLabel(ProductManager.getProducts().getFirst().getName().toUpperCase());
 	    	textField = new JTextField(20);
-	    	button = new JButton("SALVA");
-	    	button.setBounds(150, 200, 220, 50);
+	    	//button.setBounds(150, 200, 220, 50);
 	    	
-	    	button.addActionListener(al);
-	    	
-	    	button2 = new JButton("CANCELLA");
-	    	button2.setBounds(150, 200, 220, 50);
-	    	
-	    	button2.addActionListener(al2);
+	    	//button.addActionListener(al);
 	    	
 	    	//panel.add(label);
-	    	panel.add(p1);
-	    	panel.add(textField);
-	    	panel.add(button);
-	    	panel.add(button2);
+	    	//panel.add(textField);
+	    	//panel.add(button);
+	    	//panel.add(button2);
 	    	
-	    	frame.add(panel, BorderLayout.CENTER);
+	    	title_panel.add(product_title, BorderLayout.NORTH);
+	    	left_panel.add(save_b, BorderLayout.EAST);
+	    	left_panel.add(delete_b, BorderLayout.WEST);
+	    	frame.add(left_panel, BorderLayout.LINE_START);
 	    	
 	    }
 	    
@@ -87,3 +241,4 @@ public class MainWindow{
 	        }
 	    };
 }
+*/

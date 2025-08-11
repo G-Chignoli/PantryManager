@@ -20,6 +20,10 @@ public class ProductManager {
 	private static EntityManager entity_manager = entity_manager_factory.createEntityManager();
 	private static CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 	
+	public static void main(String[] args) {
+		run(OperationMode.SAVE, new Product("carote", 0f, 0, 0, null));
+	}
+	
 	private static void run(OperationMode operation, Product product) {
 		try {
 			entity_manager.getTransaction().begin();

@@ -9,6 +9,7 @@ public class Launcher {
 			@Override
 			public void run() {
 				MainWindow main_window = new MainWindow();
+				main_window.initialize();
 				main_window.show();
 			}
 		});
