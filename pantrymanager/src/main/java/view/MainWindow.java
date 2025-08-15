@@ -39,9 +39,16 @@ import com.toedter.calendar.JDateChooser;
 
 public class MainWindow {
 
-	private JFrame main_frame;
-	private JTextField p_search;
+	private static JFrame main_frame;
+	protected static JTextField p_search;
 	public static String last_comp_hovered = null;
+	private static Action add_action = new AddAction();
+	private static Action rmv_action = new RemoveButtonAction();
+	private static Action search_action = new SearchMtxAction();
+	private static JPanel[][] panels = new JPanel[3][3];
+	private static JLabel[][] labels = new JLabel[3][3];
+	private static JButton[][] buttons = new JButton[3][3];
+	private static JPanel products_pl = new JPanel();
 
 	public void initialize() {
 		
@@ -52,11 +59,6 @@ public class MainWindow {
 		main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main_frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JPanel[][] panels = new JPanel[3][3];
-		JLabel[][] labels = new JLabel[3][3];
-		JButton[][] buttons = new JButton[3][3];
-		Action add_action = new AddAction();
-		RemoveButtonAction rmv_action = new RemoveButtonAction();
 		
 		
 		JPanel profile_pl = new JPanel();
@@ -115,30 +117,32 @@ public class MainWindow {
 		product_pl.add(p_search_left, "cell 0 0 1 2,grow");
 		
 		p_search = new JTextField();
-		p_search.setText("Cerca prodotto");
+		p_search.setToolTipText("Inserisci il nome del prodotto che vuoi cercare.");
 		product_pl.add(p_search, "cell 1 1 2 1,grow");
 		p_search.setColumns(10);
 		
-		JButton p_search_send = new JButton("Invia");
+		JButton p_search_send = new JButton(search_action);
+		p_search_send.setText("Invia");
 		product_pl.add(p_search_send, "cell 3 1,growx,aligny center");
 		
 		JButton p_search_right = new JButton(">>>>");
 		product_pl.add(p_search_right, "cell 4 0 1 2,grow");
 		
+		String[] p_names = MatrixRenderer.fillMtx();
+		
+		
 		// Products Matrix Panel
 		
-		JPanel products_pl = new JPanel();
 		products_pl.setBackground(new Color(192, 192, 192));
 		product_pl.add(products_pl, "cell 0 2 5 3,grow");
 		products_pl.setLayout(new MigLayout("", "[170px][170px][170px]", "[170px][170px][170px]"));
 		
-		//productsMatrixInit(products_pl, panels, labels);
-		//System.out.println(add.getRootPane());
-		
+		renderMatrix(MatrixRenderer.fillMtx());
 		
 
-		String[] p_names = PopulateAction.populate();
+		//String[] p_names = PopulateAction.fillMtx("cipol".toLowerCase());
 		
+		/*
 		int color = 255;
 		int k = 0;
 		for (int i = 0; i < 3; i++) {
@@ -149,25 +153,14 @@ public class MainWindow {
 				JButton add = new JButton(add_action);
 				JButton remove = new JButton(rmv_action);
 				
-				
 				p.setName("p" + i + j);
 				p.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
 				p.setBackground(new Color(color, color, 255));
 				p.setOpaque(true);
 				
-				/*
-				add.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						System.out.println(e.getComponent().getParent().getName());
-					}
-				});
-				*/
-				
 				p.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						//System.out.println(e.getComponent().getName());
 						last_comp_hovered = e.getComponent().getName();
 					}
 				});
@@ -175,7 +168,6 @@ public class MainWindow {
 				panels[i][j] = p;
 				labels[i][j] = name;
 				buttons[i][j] = add;
-
 
 				p.add(name, "cell 0 0 3 1, alignx center, aligny center");
 				p.add(add, "cell 2 1, grow, alignx center, aligny center");
@@ -187,6 +179,54 @@ public class MainWindow {
 				k++;
 			}
 		}
+		*/
+	}
+	
+	public static void renderMatrix(String[] p_names) {
+		int color = 255;
+		int k = 0;
+		products_pl.removeAll();
+		
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				JPanel p = new JPanel();
+				JLabel name = new JLabel(p_names[k]);
+				JLabel qty = new JLabel("");
+				JButton add = new JButton(add_action);
+				JButton remove = new JButton(rmv_action);
+				
+				p.setName("p" + i + j);
+				p.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
+				p.setBackground(new Color(color, color, 255));
+				p.setOpaque(true);
+				
+				p.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						last_comp_hovered = e.getComponent().getName();
+					}
+				});
+				
+				panels[i][j] = p;
+				labels[i][j] = name;
+				buttons[i][j] = add;
+				
+				p.add(name, "cell 0 0 3 1, alignx center, aligny center");
+				p.add(add, "cell 2 1, grow, alignx center, aligny center");
+				p.add(qty, "cell 1 1, alignx center, aligny center");
+				p.add(remove, "cell 0 1, grow, alignx center, aligny center");
+				products_pl.add(p, "cell " + j + " " + i +  ", grow");
+				
+				color -= 30;
+				k++;
+			}
+		}
+		
+		main_frame.revalidate();
+	}
+	
+	public static String getProductSearchText() {
+		return p_search.getText();
 	}
 	
     public void show() {

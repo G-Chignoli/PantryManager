@@ -90,7 +90,8 @@ public class ProductManager {
 		CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
 		Root<Product> root = criteria.from(Product.class);
 		
-		criteria.select(root).where(builder.equal(root.get("name"), name ));
+		//criteria.select(root).where(builder.equal(root.get("name"), name ));
+		criteria.where(builder.like(root.get("name"), name.toLowerCase().concat("%")));
 		
 		return entity_manager.createQuery(criteria).getResultList();
 	}
