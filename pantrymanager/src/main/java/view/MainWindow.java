@@ -1,40 +1,18 @@
 package view;
 
-import model.ProductManager;
-
-import java.awt.EventQueue;
-
+import org.apache.commons.lang3.StringUtils;
 import javax.swing.JFrame;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.Action;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-
 import javax.swing.JTextField;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
-
-import java.awt.Graphics;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-
-import javax.swing.SwingUtilities;
-import javax.swing.text.DateFormatter;
-
 import com.toedter.calendar.JDateChooser;
 
 public class MainWindow {
@@ -118,6 +96,7 @@ public class MainWindow {
 		
 		p_search = new JTextField();
 		p_search.setToolTipText("Inserisci il nome del prodotto che vuoi cercare.");
+		p_search.addActionListener(search_action);
 		product_pl.add(p_search, "cell 1 1 2 1,grow");
 		p_search.setColumns(10);
 		
@@ -128,9 +107,6 @@ public class MainWindow {
 		JButton p_search_right = new JButton(">>>>");
 		product_pl.add(p_search_right, "cell 4 0 1 2,grow");
 		
-		String[] p_names = MatrixRenderer.fillMtx();
-		
-		
 		// Products Matrix Panel
 		
 		products_pl.setBackground(new Color(192, 192, 192));
@@ -138,9 +114,6 @@ public class MainWindow {
 		products_pl.setLayout(new MigLayout("", "[170px][170px][170px]", "[170px][170px][170px]"));
 		
 		renderMatrix(MatrixRenderer.fillMtx());
-		
-
-		//String[] p_names = PopulateAction.fillMtx("cipol".toLowerCase());
 		
 		/*
 		int color = 255;
@@ -190,7 +163,7 @@ public class MainWindow {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				JPanel p = new JPanel();
-				JLabel name = new JLabel(p_names[k]);
+				JLabel name = new JLabel(StringUtils.capitalize(p_names[k]));
 				JLabel qty = new JLabel("");
 				JButton add = new JButton(add_action);
 				JButton remove = new JButton(rmv_action);
