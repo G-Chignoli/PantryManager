@@ -35,11 +35,6 @@ import java.util.Properties;
 import javax.swing.SwingUtilities;
 import javax.swing.text.DateFormatter;
 
-import org.jdatepicker.JDatePicker;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
 import com.toedter.calendar.JDateChooser;
 
 public class MainWindow {
