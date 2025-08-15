@@ -55,7 +55,7 @@ public class DishManager {
 	}
 
 	public static boolean checkForIngredient(String name) {
-		return !ProductManager.findProductByName(name).isEmpty();
+		return !ProductManager.getProductsByName(name).isEmpty();
 	}
 	
 	

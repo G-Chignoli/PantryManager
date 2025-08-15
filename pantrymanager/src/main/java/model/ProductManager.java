@@ -21,7 +21,7 @@ public class ProductManager {
 	private static CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 	
 	public static void main(String[] args) {
-		run(OperationMode.SAVE, new Product("carote", 0f, 0, 0, null));
+		run(OperationMode.SAVE, new Product("spinaci", 0f, 0, 0, null));
 	}
 	
 	private static void run(OperationMode operation, Product product) {
@@ -54,7 +54,7 @@ public class ProductManager {
 	
 	private static void modifyProduct(Product p) {
 		try {
-			  Product to_change = findProductByName(p.getName()).get(0);
+			  Product to_change = getProductsByName(p.getName()).get(0);
 			  p.setId(to_change.getId());
 			  entity_manager.merge(p);
 		} catch (Exception e) {
@@ -64,7 +64,7 @@ public class ProductManager {
 
 	private static void deleteProduct(Product p) {
 		try {
-			entity_manager.remove(findProductByName(p.getName()).get(0));			  
+			entity_manager.remove(getProductsByName(p.getName()).get(0));			  
 		} catch (Exception e) {
 			logger.error("Impossibile eliminare il prodotto.");
 		}			
@@ -86,7 +86,7 @@ public class ProductManager {
 		return entity_manager.createQuery(criteria).getResultList();
 	}
 	
-	public static List<Product> findProductByName(String name){
+	public static List<Product> getProductsByName(String name){
 		CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
 		Root<Product> root = criteria.from(Product.class);
 		

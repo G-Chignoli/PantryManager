@@ -44,13 +44,13 @@ public class MainWindow {
 	public static String last_comp_hovered = null;
 
 	public void initialize() {
+		
 		main_frame = new JFrame();
 		main_frame.setResizable(false);
 		main_frame.setTitle("PantryManager");
 		main_frame.setBounds(100, 100, 1300, 730);
 		main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main_frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
-		//main_frame.setLayout(new MigLayout("", "[300.00px][1000.00px]"));
 		
 		JPanel[][] panels = new JPanel[3][3];
 		JLabel[][] labels = new JLabel[3][3];
@@ -111,7 +111,7 @@ public class MainWindow {
 		product_title.setBackground(new Color(128, 128, 255));
 		product_pl.add(product_title, "cell 2 0,alignx center,aligny top");
 		
-		JButton p_search_left = new JButton("<--");
+		JButton p_search_left = new JButton("<<<<");
 		product_pl.add(p_search_left, "cell 0 0 1 2,grow");
 		
 		p_search = new JTextField();
@@ -122,7 +122,7 @@ public class MainWindow {
 		JButton p_search_send = new JButton("Invia");
 		product_pl.add(p_search_send, "cell 3 1,growx,aligny center");
 		
-		JButton p_search_right = new JButton("-->");
+		JButton p_search_right = new JButton(">>>>");
 		product_pl.add(p_search_right, "cell 4 0 1 2,grow");
 		
 		// Products Matrix Panel
@@ -133,19 +133,19 @@ public class MainWindow {
 		products_pl.setLayout(new MigLayout("", "[170px][170px][170px]", "[170px][170px][170px]"));
 		
 		//productsMatrixInit(products_pl, panels, labels);
-		
-		
-		
 		//System.out.println(add.getRootPane());
 		
 		
+
+		String[] p_names = PopulateAction.populate();
 		
 		int color = 255;
+		int k = 0;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				JPanel p = new JPanel();
-				JLabel name = new JLabel("Nome Prodotto " + i + j);
-				JLabel qty = new JLabel("2");
+				JLabel name = new JLabel(p_names[k]);
+				JLabel qty = new JLabel("");
 				JButton add = new JButton(add_action);
 				JButton remove = new JButton(rmv_action);
 				
@@ -184,153 +184,16 @@ public class MainWindow {
 				products_pl.add(p, "cell " + j + " " + i +  ", grow");
 				
 				color -= 30;
+				k++;
 			}
 		}
 	}
 	
-	
-	/*
-	private void productsMatrixInit(JPanel products_pl, JPanel[][] panels, JLabel[][] labels) {
-		//JPanel[][] panels = new JPanel[3][3];
-		//JLabel[][] labels = new JLabel[3][3];
-		// i colonne
-		// j righe
-		int color = 255;
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				JPanel p = new JPanel();
-				JLabel name = new JLabel("Nome Prodotto " + color);
-				JLabel qty = new JLabel("2");
-				JButton add = new JButton(add_Action);
-				JButton remove = new JButton("-");
-				
-				p.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
-				p.setBackground(new Color(color, color, 255));
-				p.setOpaque(true);
-				
-				panels[i][j] = p;
-				labels[i][j] = name;
-
-				p.add(name, "cell 0 0 3 1, alignx center, aligny center");
-				p.add(add, "cell 0 1, grow, alignx center, aligny center");
-				p.add(qty, "cell 1 1, alignx center, aligny center");
-				p.add(remove, "cell 2 1, grow, alignx center, aligny center");
-				products_pl.add(p, "cell " + j + " " + i +  ", grow");
-				
-				color -= 30;
-			}
-		}
-	}
-	
-	 */
     public void show() {
     	this.main_frame.setVisible(true);
-    	
     }
     
     public static String getLastCompHovered() {
     	return last_comp_hovered;
     }
 }
-/*
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.*;
-import javax.swing.*;
-
-public class MainWindow{
-		
-		private JFrame frame;
-		private JPanel left_panel;
-		private JPanel title_panel;
-		
-		private JLabel product_title;
-		private JTextField textField;
-		private JButton save_b;
-		private JButton delete_b;
-		
-		private static final int WIDTH = 1200;
-		private static final int HEIGHT = 700;
-	
-	    public void main(String[] args)
-	    {
-	    	initialize();
-	    }
-	    
-	    public MainWindow() {
-	    	initialize();
-	    }
-	    
-	    public void initialize() {
-	    	frame = new JFrame();
-	    	frame.setTitle("PantryManager");
-	    	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	    	frame.setSize(WIDTH, HEIGHT);
-	    	frame.setLayout(new BorderLayout(10,10));
-	    	frame.setLocationRelativeTo(null);
-
-	    	//frame.setBounds(0, 0, WIDTH, HEIGHT);
-	    	//frame.setResizable(false);
-	    	
-	    	//PANEL SETUP
-	    	left_panel = new JPanel(new BorderLayout());
-	    	left_panel.setBackground(new Color(215,216,230));
-	    	title_panel = new JPanel(new BorderLayout());
-	    	title_panel.setBackground(new Color(200,200,200));
-	    	
-	    	
-	    	//BUTTON SETUP
-	    	save_b = new JButton("SAVE");
-	    	save_b.setPreferredSize(new Dimension(100, 100));
-	    	delete_b = new JButton("DELETE");
-	    	delete_b.setPreferredSize(new Dimension(100, 100));
-	    	
-	    	//LABEL SETUP
-	    	product_title = new JLabel("PRODOTTI");
-	    	
-	    	
-	    	//panel = new JPanel();
-	    	//panel.setBackground(new Color(173,216,230));
-	    	//label = new JLabel("Nome prodotto");
-	    	//p1 = new JLabel(ProductManager.getProducts().getFirst().getName().toUpperCase());
-	    	textField = new JTextField(20);
-	    	//button.setBounds(150, 200, 220, 50);
-	    	
-	    	//button.addActionListener(al);
-	    	
-	    	//panel.add(label);
-	    	//panel.add(textField);
-	    	//panel.add(button);
-	    	//panel.add(button2);
-	    	
-	    	title_panel.add(product_title, BorderLayout.NORTH);
-	    	left_panel.add(save_b, BorderLayout.EAST);
-	    	left_panel.add(delete_b, BorderLayout.WEST);
-	    	frame.add(left_panel, BorderLayout.LINE_START);
-	    	
-	    }
-	    
-	    public void show() {
-	    	this.frame.setVisible(true);
-	    	
-	    }
-	    
-	    ActionListener al = new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    	    System.out.println(textField.getText());
-	        }
-	    };
-
-	    ActionListener al2 = new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    	    System.out.println(textField.getText().toUpperCase());
-	        }
-	    };
-}
-*/
