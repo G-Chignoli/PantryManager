@@ -23,6 +23,8 @@ public class MainWindow {
 	private static Action add_action = new AddAction();
 	private static Action rmv_action = new RemoveButtonAction();
 	private static Action search_action = new SearchMtxAction();
+	private static Action next_page = new NextPageAction();
+	private static Action prev_page = new PrevPageAction();
 	private static JPanel[][] panels = new JPanel[3][3];
 	private static JLabel[][] labels = new JLabel[3][3];
 	private static JButton[][] buttons = new JButton[3][3];
@@ -36,7 +38,6 @@ public class MainWindow {
 		main_frame.setBounds(100, 100, 1300, 730);
 		main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main_frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
-		
 		
 		
 		JPanel profile_pl = new JPanel();
@@ -91,9 +92,12 @@ public class MainWindow {
 		product_title.setBackground(new Color(128, 128, 255));
 		product_pl.add(product_title, "cell 2 0,alignx center,aligny top");
 		
-		JButton p_search_left = new JButton("<<<<");
+		JButton p_search_left = new JButton(prev_page);
 		product_pl.add(p_search_left, "cell 0 0 1 2,grow");
 		
+		JButton p_search_right = new JButton(next_page);
+		product_pl.add(p_search_right, "cell 4 0 1 2,grow");
+
 		p_search = new JTextField();
 		p_search.setToolTipText("Inserisci il nome del prodotto che vuoi cercare.");
 		p_search.addActionListener(search_action);
@@ -104,8 +108,6 @@ public class MainWindow {
 		p_search_send.setText("Invia");
 		product_pl.add(p_search_send, "cell 3 1,growx,aligny center");
 		
-		JButton p_search_right = new JButton(">>>>");
-		product_pl.add(p_search_right, "cell 4 0 1 2,grow");
 		
 		// Products Matrix Panel
 		
@@ -190,7 +192,7 @@ public class MainWindow {
 				p.add(remove, "cell 0 1, grow, alignx center, aligny center");
 				products_pl.add(p, "cell " + j + " " + i +  ", grow");
 				
-				color -= 30;
+				color -= 10;
 				k++;
 			}
 		}
