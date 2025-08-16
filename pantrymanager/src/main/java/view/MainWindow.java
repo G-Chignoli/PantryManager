@@ -15,6 +15,8 @@ import java.awt.event.MouseEvent;
 import java.util.Date;
 import com.toedter.calendar.JDateChooser;
 
+import model.OperationMode;
+
 public class MainWindow {
 
 	private static JFrame main_frame;
@@ -28,8 +30,8 @@ public class MainWindow {
 	private static JPanel[][] panels = new JPanel[3][3];
 	private static JLabel[][] labels = new JLabel[3][3];
 	private static JButton[][] buttons = new JButton[3][3];
-	private static JPanel products_pl = new JPanel();
-
+	private static JPanel p_matrix_pl = new JPanel();
+	
 	public void initialize() {
 		
 		main_frame = new JFrame();
@@ -75,11 +77,6 @@ public class MainWindow {
 		JLabel form_exp_date = new JLabel("Data di Scadenza"); 
 		form_pl.add(form_exp_date, "cell  0 3, alignx right, aligny center");
 		
-	    /*
-		JTextField form_exp_date_tf = new JTextField(20);
-		form_exp_date_tf.setToolTipText("Inserisci data");
-		*/
-		
 		JDateChooser chooser = new JDateChooser(new Date(), "dd-mm-yyyy"); 
 		form_pl.add(chooser, "cell 1 3");
 
@@ -108,59 +105,24 @@ public class MainWindow {
 		p_search_send.setText("Invia");
 		product_pl.add(p_search_send, "cell 3 1,growx,aligny center");
 		
-		
 		// Products Matrix Panel
 		
-		products_pl.setBackground(new Color(192, 192, 192));
-		product_pl.add(products_pl, "cell 0 2 5 3,grow");
-		products_pl.setLayout(new MigLayout("", "[170px][170px][170px]", "[170px][170px][170px]"));
+		//matrixInit(MatrixRenderer.getProductsToShow());
+		matrixInit();
+		product_pl.add(p_matrix_pl, "cell 0 2 5 3,grow");
 		
-		renderMatrix(MatrixRenderer.fillMtx());
-		
-		/*
-		int color = 255;
-		int k = 0;
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				JPanel p = new JPanel();
-				JLabel name = new JLabel(p_names[k]);
-				JLabel qty = new JLabel("");
-				JButton add = new JButton(add_action);
-				JButton remove = new JButton(rmv_action);
-				
-				p.setName("p" + i + j);
-				p.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
-				p.setBackground(new Color(color, color, 255));
-				p.setOpaque(true);
-				
-				p.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						last_comp_hovered = e.getComponent().getName();
-					}
-				});
-				
-				panels[i][j] = p;
-				labels[i][j] = name;
-				buttons[i][j] = add;
-
-				p.add(name, "cell 0 0 3 1, alignx center, aligny center");
-				p.add(add, "cell 2 1, grow, alignx center, aligny center");
-				p.add(qty, "cell 1 1, alignx center, aligny center");
-				p.add(remove, "cell 0 1, grow, alignx center, aligny center");
-				products_pl.add(p, "cell " + j + " " + i +  ", grow");
-				
-				color -= 30;
-				k++;
-			}
-		}
-		*/
 	}
 	
-	public static void renderMatrix(String[] p_names) {
+	public static void matrixInit() {
+		//public static void matrixInit(String[] p_names) {
+		//MatrixRenderer.getProductsToShow(MainWindow.getProductSearchText();
+		String[] p_names = MatrixRenderer.getProductsToShow(MainWindow.getProductSearchText());
 		int color = 255;
 		int k = 0;
-		products_pl.removeAll();
+		
+		p_matrix_pl.setBackground(new Color(192, 192, 192));
+		p_matrix_pl.setLayout(new MigLayout("", "[170px][170px][170px]", "[170px][170px][170px]"));
+		p_matrix_pl.removeAll();
 		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -190,7 +152,7 @@ public class MainWindow {
 				p.add(add, "cell 2 1, grow, alignx center, aligny center");
 				p.add(qty, "cell 1 1, alignx center, aligny center");
 				p.add(remove, "cell 0 1, grow, alignx center, aligny center");
-				products_pl.add(p, "cell " + j + " " + i +  ", grow");
+				p_matrix_pl.add(p, "cell " + j + " " + i +  ", grow");
 				
 				color -= 10;
 				k++;
@@ -211,4 +173,5 @@ public class MainWindow {
     public static String getLastCompHovered() {
     	return last_comp_hovered;
     }
+    
 }

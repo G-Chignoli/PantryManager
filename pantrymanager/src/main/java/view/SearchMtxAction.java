@@ -13,7 +13,8 @@ public class SearchMtxAction extends AbstractAction implements Action {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		MainWindow.renderMatrix(MatrixRenderer.fillMtx(MainWindow.getProductSearchText()));
+		//MainWindow.matrixInit(MatrixRenderer.getProductsToShow(MainWindow.getProductSearchText()));
+		MainWindow.matrixInit();
 	}
 
 }
