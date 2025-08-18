@@ -15,7 +15,7 @@ public class NextPageAction extends AbstractAction implements Action {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//MatrixRenderer.setCurrentPage(MatrixRenderer.getCurrentPage() + 1);
-		MatrixRenderer.browsePage(PageOperation.NEXT);
+		MatrixRenderer.browsePage(SwipePage.NEXT);
 		MainWindow.matrixInit();
 		//MainWindow.matrixInit(MatrixRenderer.getProductsToShow(MainWindow.getProductSearchText()));
 		System.out.println(MatrixRenderer.getCurrentPage());

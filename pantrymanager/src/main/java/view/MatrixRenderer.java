@@ -53,12 +53,12 @@ public class MatrixRenderer{
 		MatrixRenderer.current_page = current_page;
 	}
 
-    public static void browsePage(PageOperation operation) {
+    public static void browsePage(SwipePage operation) {
 		switch(operation) {
-		  case PageOperation.NEXT:
+		  case SwipePage.NEXT:
 			  current_page ++;
 		    break;
-		  case PageOperation.PREV:				  
+		  case SwipePage.PREV:				  
 			    current_page --;
 		    break;
 		  default:

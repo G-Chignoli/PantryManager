@@ -17,7 +17,7 @@ public class ProductManager {
 	private static CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 	
 	public static void main(String[] args) {
-			run(OperationMode.SAVE, new Product("mandorle", 0f, 0, 0, null));	
+			run(OperationMode.SAVE, new Product("banane", 0f, 0, 0, null));	
 	}
 	
 	private static void run(OperationMode operation, Product product) {

@@ -1,6 +1,6 @@
 package view;
 
-public enum PageOperation {
+public enum SwipePage {
 	NEXT,
 	PREV
 }
