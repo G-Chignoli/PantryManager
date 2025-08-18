@@ -14,6 +14,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Dimension;
+import java.awt.Font;
 
 import model.OperationMode;
 
@@ -42,45 +44,69 @@ public class MainWindow {
 		main_frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
 		
+		// LEFT PANEL //
+		
+		JPanel left_pl = new JPanel();
+		left_pl.setLayout(new MigLayout("", "[grow]", "[][]"));
+		main_frame.getContentPane().add(left_pl);
+		
 		JPanel profile_pl = new JPanel();
-		main_frame.getContentPane().add(profile_pl);
-		profile_pl.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][grow]"));
-		
-		JLabel profile_title = new JLabel("PROFILI");
-		profile_pl.add(profile_title, "cell 1 0,alignx center,aligny top");
-		
-		// Product Form to add 
-		
 		JPanel form_pl = new JPanel();
-		form_pl.setBackground(new Color(200, 200, 255));
-		form_pl.setLayout(new MigLayout("", "[210px][][210px]", "[grow][grow][grow][grow][grow]"));
 		
-		profile_pl.add(form_pl, "cell 1 1, grow, alignx center, aligny center");
+		left_pl.add(profile_pl, "cell 0 0");
+		left_pl.add(form_pl, "cell 0 1");
 		
-		JLabel form_title = new JLabel("AGGIUNGI PRODOTTO"); 
-		form_pl.add(form_title, "cell 1 0, alignx center, aligny top");
 		
+		// PROFILE PANEL SETUP //
+		JLabel profile_title = new JLabel("< PROFILI >");
+
+		profile_pl.setLayout(new MigLayout("fillx, filly", "[650px]", "[360px]"));
+		profile_pl.setBackground(Color.LIGHT_GRAY);
+		profile_pl.add(profile_title, "alignx center, aligny center");
+		
+		
+		// PRODUCT FORM PANEL // 
+		JLabel form_title = new JLabel("< GESTISCI PRODOTTO >");
 		JLabel form_name = new JLabel("Nome"); 
-		form_pl.add(form_name, "cell  0 1, alignx right, aligny center");
-		
-		JTextField form_name_tf = new JTextField(15);
-		form_name_tf.setToolTipText("Inserisci il nome del prodotto che vuoi salvare.");
-		form_pl.add(form_name_tf, "cell 1 1, alignx left, aligny center");
-		
 		JLabel form_qty = new JLabel("Quantità"); 
-		form_pl.add(form_qty, "cell  0 2, alignx right, aligny center");
-
-		JTextField form_qty_tf = new JTextField(15);
-		form_name_tf.setToolTipText("Inserisci quante unità vuoi salvare.");
-		form_pl.add(form_qty_tf, "cell 1 2, alignx left, aligny center");
-				
+		JLabel form_weight = new JLabel("Peso Unità"); 
 		JLabel form_exp_date = new JLabel("Data di Scadenza"); 
-		form_pl.add(form_exp_date, "cell  0 3, alignx right, aligny center");
+		JTextField form_name_tf = new JTextField(15);
+		JTextField form_qty_tf = new JTextField(15);
+		JTextField form_weight_tf = new JTextField(15);
+		JDateChooser exp_date_chooser = new JDateChooser(new Date(), "dd-mm-yyyy"); 
+		JButton save_product = new JButton("Salva Prodotto");
+		JButton delete_product = new JButton("Cancella Prodotto");
+		JButton modify_product = new JButton("Modifica Prodotto");
 		
-		JDateChooser chooser = new JDateChooser(new Date(), "dd-mm-yyyy"); 
-		form_pl.add(chooser, "cell 1 3");
+		form_pl.setBackground(new Color(200, 200, 255));
+		form_pl.setLayout(new MigLayout("", "[200px][200px][200px]", "[][grow][grow][grow][grow][grow]"));
+		//profile_pl.add(form_pl, "cell 1 3, alignx center, aligny center");
 
+		//form_title.setForeground(Color.BLUE);
 		
+		form_name_tf.setToolTipText("Inserisci il nome del prodotto che vuoi salvare.");
+		form_qty_tf.setToolTipText("Inserisci quante unità vuoi salvare.");
+		form_weight_tf.setToolTipText("Inserisci il peso unitario del prodotto.");
+		//profile_pl.add(form_title, "cell 1 2, alignx center, aligny center");
+		
+		
+		form_pl.add(form_title, "cell 1 0, alignx center, aligny center");
+		form_pl.add(form_name, "cell  0 1, alignx right, aligny center");
+		form_pl.add(form_name_tf, "cell 1 1, alignx left, aligny center");
+		form_pl.add(form_qty, "cell  0 2, alignx right, aligny center");
+		form_pl.add(form_qty_tf, "cell 1 2, alignx left, aligny center");
+		form_pl.add(form_weight, "cell  0 3, alignx right, aligny center");
+		form_pl.add(form_weight_tf, "cell 1 3, alignx left, aligny center");
+		form_pl.add(form_exp_date, "cell  0 4, alignx right, aligny center");
+		form_pl.add(exp_date_chooser, "cell 1 4");
+		form_pl.add(save_product, "cell 0 5, grow, grow");	
+		form_pl.add(delete_product, "cell 1 5, grow, grow");	
+		form_pl.add(modify_product, "cell 2 5, grow, grow");	
+		
+		
+
+		// MATRICE PRODOTTI // 
 		JPanel product_pl = new JPanel();
 		main_frame.getContentPane().add(product_pl);
 		product_pl.setLayout(new MigLayout("", "[100px:n:100px,grow][100px:n:100px,grow][195px:n:195px,grow][100px:n:100px,grow][100px:n:100px,grow]", "[grow][][grow][grow][grow]"));
