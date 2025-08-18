@@ -6,7 +6,6 @@ import javax.swing.AbstractAction;
 
 public class AddAction extends AbstractAction{
 
-
 	public AddAction() {
 		super("+");
 	}
