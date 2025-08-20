@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -17,7 +18,12 @@ public class ProductManager {
 	private static CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 	
 	public static void main(String[] args) {
-			run(OperationMode.SAVE, new Product("banane", 0f, 0, 0, null));	
+			//run(OperationMode.SAVE, new Product("banane", 0f, 0, 0, null));	
+	}
+	
+	public static void saveProduct(String name, float weight, int qty, LocalDate exp_date) {
+		Product to_save = new Product(name.toLowerCase(), weight, qty, 0, exp_date);
+		run(OperationMode.SAVE, to_save);
 	}
 	
 	private static void run(OperationMode operation, Product product) {
@@ -26,7 +32,7 @@ public class ProductManager {
 			
 			switch(operation) {
 			  case OperationMode.SAVE:
-				  saveProduct(product);
+				  persistProduct(product);
 			    break;
 			  case OperationMode.DELETE:				  
 				    deleteProduct(product);
@@ -41,8 +47,8 @@ public class ProductManager {
 			}
 			
 			entity_manager.getTransaction().commit();
-			entity_manager_factory.close();
-			
+			entity_manager.clear();
+			//entity_manager_factory.close();
 		} catch (Exception e) {
 			logger.error("Impossibile connettersi al Database.");
 		} 
@@ -66,7 +72,7 @@ public class ProductManager {
 		}			
 	}
 
-	private static void saveProduct(Product p) {
+	private static void persistProduct(Product p) {
 		try {
 			entity_manager.persist(p);
 		} catch (Exception e) {
