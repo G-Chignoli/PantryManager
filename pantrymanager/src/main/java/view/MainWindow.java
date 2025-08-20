@@ -21,9 +21,11 @@ import java.util.Date;
 import com.toedter.calendar.JDateChooser;
 
 public class MainWindow {
+	
 
-	private static JFrame main_frame;
-	protected static JTextField p_search;
+	private static final int MTX_SIZE = 3;
+	private static JFrame main_frame = new JFrame();
+	private static JTextField p_search = new JTextField();
 	private static String last_comp_hovered = null;
 	private static LocalDate exp_date = null;
 	private static Action add_action = new AddAction();
@@ -31,18 +33,18 @@ public class MainWindow {
 	private static Action search_action = new SearchMtxAction();
 	private static Action next_page = new NextPageAction();
 	private static Action prev_page = new PrevPageAction();
-	private static JPanel[][] panels = new JPanel[3][3];
-	private static JLabel[][] labels = new JLabel[3][3];
-	private static JButton[][] buttons = new JButton[3][3];
+	private static JPanel[][] mtx_pls = new JPanel[MTX_SIZE][MTX_SIZE];
+	private static JLabel[][] mtx_lbs = new JLabel[MTX_SIZE][MTX_SIZE];
+	private static JButton[][] mtx_bts = new JButton[MTX_SIZE][MTX_SIZE];
 	private static JPanel p_matrix_pl = new JPanel();
 	private static JTextField form_name_tf = new JTextField(15);
 	private static JTextField form_qty_tf = new JTextField(15);
 	private static JTextField form_weight_tf = new JTextField(15);
+	private static JTextField form_cal_tf = new JTextField(15);
 	private static JDateChooser exp_date_chooser = new JDateChooser(new Date(), " dd/MM/yyyy"); 
 	
 	public void initialize() {
 		
-		main_frame = new JFrame();
 		main_frame.setResizable(false);
 		main_frame.setTitle("PantryManager");
 		main_frame.setBounds(100, 100, 1300, 730);
@@ -51,7 +53,6 @@ public class MainWindow {
 		
 		
 		// LEFT PANEL //
-		
 		JPanel left_pl = new JPanel();
 		left_pl.setLayout(new MigLayout("", "[grow]", "[][]"));
 		main_frame.getContentPane().add(left_pl);
@@ -78,17 +79,19 @@ public class MainWindow {
 		JLabel form_name = new JLabel("Nome"); 
 		JLabel form_qty = new JLabel("Quantità"); 
 		JLabel form_weight = new JLabel("Peso Unità"); 
+		JLabel form_cal = new JLabel("Calorie per unità");
 		JLabel form_exp_date = new JLabel("Data di Scadenza"); 
 		JButton save_product = new JButton(save_product_action);
 		JButton delete_product = new JButton("Cancella Prodotto");
 		JButton modify_product = new JButton("Modifica Prodotto");
 		
 		form_pl.setBackground(new Color(200, 200, 255));
-		form_pl.setLayout(new MigLayout("", "[200px][200px][200px]", "[][grow][grow][grow][grow][grow]"));
+		form_pl.setLayout(new MigLayout("", "[200px][200px][200px]", "[][grow][grow][grow][grow][grow][grow][200px]"));
 		
 		form_name_tf.setToolTipText("Inserisci il nome del prodotto che vuoi salvare.");
 		form_qty_tf.setToolTipText("Inserisci quante unità vuoi salvare.");
 		form_weight_tf.setToolTipText("Inserisci il peso unitario del prodotto.");
+		form_cal_tf.setToolTipText("Inserisci le calorie del prodotto per unità");
 		
 		LocalDate today = LocalDate.now();
 		exp_date_chooser.addPropertyChangeListener("date",
@@ -98,7 +101,6 @@ public class MainWindow {
 					LocalDate date = expDateToLocalDate();
 					if( date.isAfter(today) ) {
 						setExpDate(date);
-						System.out.println(date);
 					}
 				}
 			});
@@ -111,11 +113,13 @@ public class MainWindow {
 		form_pl.add(form_weight_tf, "cell 1 2, alignx left, aligny center");
 		form_pl.add(form_qty, "cell  0 3, alignx right, aligny center");
 		form_pl.add(form_qty_tf, "cell 1 3, alignx left, aligny center");
-		form_pl.add(form_exp_date, "cell  0 4, alignx right, aligny center");
-		form_pl.add(exp_date_chooser, "cell 1 4");
-		form_pl.add(save_product, "cell 0 5, grow, grow");	
-		form_pl.add(delete_product, "cell 1 5, grow, grow");	
-		form_pl.add(modify_product, "cell 2 5, grow, grow");	
+		form_pl.add(form_cal, "cell  0 4, alignx right, aligny center");
+		form_pl.add(form_cal_tf, "cell 1 4, alignx left, aligny center");
+		form_pl.add(form_exp_date, "cell  0 5, alignx right, aligny center");
+		form_pl.add(exp_date_chooser, "cell 1 5");
+		form_pl.add(save_product, "cell 0 6, grow, grow");	
+		form_pl.add(delete_product, "cell 1 6, grow, grow");	
+		form_pl.add(modify_product, "cell 2 6, grow, grow");	
 		
 		
 
@@ -124,7 +128,7 @@ public class MainWindow {
 		main_frame.getContentPane().add(product_pl);
 		product_pl.setLayout(new MigLayout("", "[100px:n:100px,grow][100px:n:100px,grow][195px:n:195px,grow][100px:n:100px,grow][100px:n:100px,grow]", "[grow][][grow][grow][grow]"));
 		
-		JLabel product_title = new JLabel("PRODOTTI");
+		JLabel product_title = new JLabel("< PRODOTTI >");
 		product_title.setBackground(new Color(128, 128, 255));
 		product_pl.add(product_title, "cell 2 0,alignx center,aligny top");
 		
@@ -134,7 +138,6 @@ public class MainWindow {
 		JButton p_search_right = new JButton(next_page);
 		product_pl.add(p_search_right, "cell 4 0 1 2,grow");
 
-		p_search = new JTextField();
 		p_search.setToolTipText("Inserisci il nome del prodotto che vuoi cercare.");
 		p_search.addActionListener(search_action);
 		product_pl.add(p_search, "cell 1 1 2 1,grow");
@@ -180,9 +183,9 @@ public class MainWindow {
 					}
 				});
 				
-				panels[i][j] = p;
-				labels[i][j] = name;
-				buttons[i][j] = add;
+				mtx_pls[i][j] = p;
+				mtx_lbs[i][j] = name;
+				mtx_bts[i][j] = add;
 				
 				p.add(name, "cell 0 0 3 1, alignx center, aligny center");
 				p.add(add, "cell 2 1, grow, alignx center, aligny center");
