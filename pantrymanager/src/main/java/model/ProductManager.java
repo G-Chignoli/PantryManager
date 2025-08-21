@@ -26,6 +26,19 @@ public class ProductManager {
 		run(OperationMode.SAVE, to_save);
 	}
 	
+	public static void deleteProduct(String name) {
+		Product to_delete = new Product(name.toLowerCase(), 0f, 0, 0, null);
+		run(OperationMode.DELETE, to_delete);
+	}
+	
+	
+	/*
+	public static void modifyProduct(String name, float weight, int qty, float calories, LocalDate exp_date) {
+		Product to_change = new Product(name.toLowerCase(), weight, qty, calories, exp_date);
+		run(OperationMode.MODIFY, to_change);
+	}
+	*/
+	
 	private static void run(OperationMode operation, Product product) {
 		try {
 			entity_manager.getTransaction().begin();
@@ -35,10 +48,10 @@ public class ProductManager {
 				  persistProduct(product);
 			    break;
 			  case OperationMode.DELETE:				  
-				    deleteProduct(product);
+				    removeProduct(product);
 			    break;
 			  case OperationMode.MODIFY:
-				  	modifyProduct(product);
+				  	mergeProduct(product);
 				break;
 			  case OperationMode.GET:
 				  getProducts();
@@ -54,7 +67,7 @@ public class ProductManager {
 		} 
 	}
 	
-	private static void modifyProduct(Product p) {
+	private static void mergeProduct(Product p) {
 		try {
 			  Product to_change = getProductsByName(p.getName()).get(0);
 			  p.setId(to_change.getId());
@@ -64,7 +77,7 @@ public class ProductManager {
 		}		
 	}
 
-	private static void deleteProduct(Product p) {
+	private static void removeProduct(Product p) {
 		try {
 			entity_manager.remove(getProductsByName(p.getName()).get(0));			  
 		} catch (Exception e) {

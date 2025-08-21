@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.Action;
+import javax.swing.Icon;
+
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -74,6 +76,7 @@ public class MainWindow {
 		
 		// PRODUCT FORM PANEL // 
 		Action save_product_action = new SaveProductAction();
+		Action delete_product_action = new DeleteProductAction();
 		
 		JLabel form_title = new JLabel("< GESTISCI PRODOTTO >");
 		JLabel form_name = new JLabel("Nome"); 
@@ -82,7 +85,7 @@ public class MainWindow {
 		JLabel form_cal = new JLabel("Calorie per unità");
 		JLabel form_exp_date = new JLabel("Data di Scadenza"); 
 		JButton save_product = new JButton(save_product_action);
-		JButton delete_product = new JButton("Cancella Prodotto");
+		JButton delete_product = new JButton(delete_product_action);
 		JButton modify_product = new JButton("Modifica Prodotto");
 		
 		form_pl.setBackground(new Color(200, 200, 255));

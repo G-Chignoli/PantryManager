@@ -32,7 +32,7 @@ public class SaveProductAction extends AbstractAction {
 					toInt(MainWindow.getFormQty()),
 					toInt(MainWindow.getFormCal()),
 					(LocalDate) MainWindow.getExpDate());
-			
+			MainWindow.matrixInit();
 			logger.info("Prodotto Salvato!");			
 		}
 	}
