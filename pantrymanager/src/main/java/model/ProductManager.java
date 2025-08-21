@@ -21,8 +21,8 @@ public class ProductManager {
 			//run(OperationMode.SAVE, new Product("banane", 0f, 0, 0, null));	
 	}
 	
-	public static void saveProduct(String name, float weight, int qty, LocalDate exp_date) {
-		Product to_save = new Product(name.toLowerCase(), weight, qty, 0, exp_date);
+	public static void saveProduct(String name, float weight, int qty, int calories, LocalDate exp_date) {
+		Product to_save = new Product(name.toLowerCase(), weight, qty, calories, exp_date);
 		run(OperationMode.SAVE, to_save);
 	}
 	

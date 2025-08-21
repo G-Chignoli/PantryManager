@@ -224,6 +224,11 @@ public class MainWindow {
 	public static String getFormWeight() {
 		return form_weight_tf.getText();
 	}
+	
+	public static String getFormCal() {
+		return form_cal_tf.getText();
+	}
+
 
 	public static LocalDate expDateToLocalDate() {
 		return exp_date_chooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

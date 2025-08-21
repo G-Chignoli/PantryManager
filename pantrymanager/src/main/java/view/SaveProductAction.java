@@ -30,6 +30,7 @@ public class SaveProductAction extends AbstractAction {
 					name, 
 					toFloat(MainWindow.getFormWeight()), 
 					toInt(MainWindow.getFormQty()),
+					toInt(MainWindow.getFormCal()),
 					(LocalDate) MainWindow.getExpDate());
 			
 			logger.info("Prodotto Salvato!");			
@@ -42,7 +43,7 @@ public class SaveProductAction extends AbstractAction {
 			t = Float.parseFloat(s);
 		}
 		catch (NumberFormatException e) {
-			logger.warn("Inserisci un valore valido per la quantità!");
+			logger.warn("Inserisci un valore valido nei campi!");
 			t=0;
 		}
 		return t;
@@ -53,7 +54,7 @@ public class SaveProductAction extends AbstractAction {
 			t = Integer.parseInt(s);
 		}
 		catch (NumberFormatException e) {
-			System.out.println("Inserisci un valore valido per la quantità!");
+			logger.warn("Inserisci un valore valido nei campi!");
 			t=0;
 		}
 		return t;
