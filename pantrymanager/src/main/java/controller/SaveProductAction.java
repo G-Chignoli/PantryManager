@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
@@ -10,12 +10,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import model.ProductManager;
+import view.MainWindow;
 
 @SuppressWarnings("serial")
 public class SaveProductAction extends AbstractAction {
 	public static final Logger logger = LogManager.getLogger(SaveProductAction.class);
 
-	SaveProductAction(){
+	public SaveProductAction(){
 		super("Salva Prodotto");
 	}
 

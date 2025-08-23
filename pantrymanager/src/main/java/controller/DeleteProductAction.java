@@ -1,15 +1,16 @@
-package view;
+package controller;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
 import model.ProductManager;
+import view.MainWindow;
 
 @SuppressWarnings("serial")
 public class DeleteProductAction extends AbstractAction {
 
-	DeleteProductAction(){
+	public DeleteProductAction(){
 		super("Rimuovi Prodotto");
 	}
 

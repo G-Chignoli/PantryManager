@@ -1,8 +1,10 @@
-package view;
+package controller;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+
+import view.MainWindow;
 
 public class RemoveButtonAction extends AbstractAction{
 
