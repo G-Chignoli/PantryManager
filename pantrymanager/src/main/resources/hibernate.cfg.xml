@@ -9,6 +9,8 @@
         <property name="connection.username">sa</property>
         <property name="connection.password"></property>
         <property name="connection.pool_size">10</property>
+        <property name="connection.minimumIdle">5</property>
+		<property name="connection.maximumPoolSize">10</property>
         
         <!-- Echo the SQL to stdout -->
         <property name="show_sql">true</property>

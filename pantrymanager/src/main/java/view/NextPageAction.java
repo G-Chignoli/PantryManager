@@ -1,11 +1,10 @@
 package view;
 
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
+@SuppressWarnings("serial")
 public class NextPageAction extends AbstractAction implements Action {
 
 	public NextPageAction() {
@@ -14,11 +13,8 @@ public class NextPageAction extends AbstractAction implements Action {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//MatrixRenderer.setCurrentPage(MatrixRenderer.getCurrentPage() + 1);
 		MatrixRenderer.browsePage(SwipePage.NEXT);
 		MainWindow.matrixInit();
-		//MainWindow.matrixInit(MatrixRenderer.getProductsToShow(MainWindow.getProductSearchText()));
-		System.out.println(MatrixRenderer.getCurrentPage());
 	}
 
 }

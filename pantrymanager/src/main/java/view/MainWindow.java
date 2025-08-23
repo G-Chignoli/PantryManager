@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.Action;
 import net.miginfocom.swing.MigLayout;
@@ -23,7 +22,6 @@ import com.toedter.calendar.JDateChooser;
 
 public class MainWindow {
 	
-
 	private static final int MTX_SIZE = 3;
 	private static JFrame main_frame = new JFrame();
 	private static JTextField p_search = new JTextField();

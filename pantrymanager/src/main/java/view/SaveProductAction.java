@@ -37,7 +37,7 @@ public class SaveProductAction extends AbstractAction {
 						"Prodotto Aggiunto.");			
 				
 				MainWindow.matrixInit();
-			} else errorMessage("Non è stato possibile salvare il prodotto.");
+			} else errorMessage("Non è stato possibile salvare il prodotto (prodotto già inserito).");
 			
 		}
 	}

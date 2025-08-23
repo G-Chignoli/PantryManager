@@ -838,3 +838,6 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/gabri/D
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 59 more
+2025-08-23 17:25:23.599927+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PANTRY" not found; SQL statement:
+select p1_0.id,p1_0.calories,p1_0.expiration_date,p1_0.name,p1_0.qty,p1_0.weight from PANTRY p1_0 where p1_0.name like ? escape '' [42102-222]

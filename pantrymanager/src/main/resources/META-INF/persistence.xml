@@ -7,11 +7,11 @@
     	<class>model.Product</class>
     	<class>model.ProductManager</class>
     	<properties>
-    		<property name="jakarta.persistence.jdbc.url" value="jdbc:h2:./src/main/java/database/PRODUCT" />
+    		<property name="jakarta.persistence.jdbc.url" value="jdbc:h2:./src/main/java/database/PANTRY" />
     		<property name="jakarta.persistence.jdbc.username" value=""/>
     		<property name="jakarta.persistence.jdbc.password" value=""/>
-    		<property name="jakarta.persistence.schema-generation.database.action" value="none"/>
-    		<property name="hibernate.connection.pool_size" value="10"/>
+    		<property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+    		<property name="jakarta.persistence.pool_size" value="10"/>
     	</properties>
     </persistence-unit>
     <persistence-unit name="dish" transaction-type="RESOURCE_LOCAL">
