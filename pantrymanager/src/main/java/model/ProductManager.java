@@ -21,14 +21,14 @@ public class ProductManager {
 			//run(OperationMode.SAVE, new Product("banane", 0f, 0, 0, null));	
 	}
 	
-	public static void saveProduct(String name, float weight, int qty, int calories, LocalDate exp_date) {
+	public static int saveProduct(String name, float weight, int qty, int calories, LocalDate exp_date) {
 		Product to_save = new Product(name.toLowerCase(), weight, qty, calories, exp_date);
-		run(OperationMode.SAVE, to_save);
+		return run(OperationMode.SAVE, to_save);
 	}
 	
-	public static void deleteProduct(String name) {
+	public static int deleteProduct(String name) {
 		Product to_delete = new Product(name.toLowerCase(), 0f, 0, 0, null);
-		run(OperationMode.DELETE, to_delete);
+		return run(OperationMode.DELETE, to_delete);
 	}
 	
 	
@@ -39,16 +39,17 @@ public class ProductManager {
 	}
 	*/
 	
-	private static void run(OperationMode operation, Product product) {
+	private static int run(OperationMode operation, Product product) {
+		int state = 0;
 		try {
 			entity_manager.getTransaction().begin();
 			
 			switch(operation) {
 			  case OperationMode.SAVE:
-				  persistProduct(product);
+				   	state = persistProduct(product);
 			    break;
 			  case OperationMode.DELETE:				  
-				    removeProduct(product);
+				    state = removeProduct(product);
 			    break;
 			  case OperationMode.MODIFY:
 				  	mergeProduct(product);
@@ -65,6 +66,7 @@ public class ProductManager {
 		} catch (Exception e) {
 			logger.error("Impossibile connettersi al Database.");
 		} 
+		return state;
 	}
 	
 	private static void mergeProduct(Product p) {
@@ -77,20 +79,24 @@ public class ProductManager {
 		}		
 	}
 
-	private static void removeProduct(Product p) {
+	private static int removeProduct(Product p) {
 		try {
 			entity_manager.remove(getProductsByName(p.getName()).get(0));			  
 		} catch (Exception e) {
 			logger.error("Impossibile eliminare il prodotto.");
-		}			
+			return 1;
+		}	
+		return 0;
 	}
 
-	private static void persistProduct(Product p) {
+	private static int persistProduct(Product p) {
 		try {
 			entity_manager.persist(p);
 		} catch (Exception e) {
 			logger.error("Impossibile salvare il prodotto.");
+			return 1;
 		}
+		return 0;
 	}
 	
 	public static List<Product> getProducts() {

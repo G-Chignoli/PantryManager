@@ -1,18 +1,13 @@
 package view;
 
 import java.awt.event.ActionEvent;
-import java.time.LocalDate;
-
 import javax.swing.AbstractAction;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import javax.swing.JOptionPane;
 
 import model.ProductManager;
 
 @SuppressWarnings("serial")
 public class DeleteProductAction extends AbstractAction {
-	public static final Logger logger = LogManager.getLogger(ProductManager.class);
 
 	DeleteProductAction(){
 		super("Rimuovi Prodotto");
@@ -23,12 +18,26 @@ public class DeleteProductAction extends AbstractAction {
 		String name = MainWindow.getFormName();
 
 		if (name.equals("")) {
-			logger.error("Operazione interrotta, inserisci un nome valido!");
+			errorMessage("Inserisci un nome valido.");
 		} else {
-			ProductManager.deleteProduct(name); 
+			if (ProductManager.deleteProduct(name) == 0) {
+				
 			MainWindow.matrixInit();
-			logger.info("Prodotto Eliminato!");			
+			JOptionPane.showMessageDialog(
+					MainWindow.getMainFrame(), 
+					"Prodotto Eliminato.");	
+			
+			} else errorMessage("Il prodotto non è stato eliminato (prodotto non trovato)");
+			
 		}
+	}
+	
+	private void errorMessage(String s) {
+		JOptionPane.showMessageDialog(
+				MainWindow.getMainFrame(), 
+				s, 
+				"Qualcosa è andato storto...",
+			    JOptionPane.ERROR_MESSAGE);
 	}
 	
 }

@@ -5,10 +5,9 @@ import javax.swing.JFrame;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.Action;
-import javax.swing.Icon;
-
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -243,6 +242,21 @@ public class MainWindow {
 
 	public static Object getExpDate() {
 		return MainWindow.exp_date;
+	}
+	
+	public static JFrame getMainFrame() {
+		return MainWindow.main_frame;
+	}
+	
+	public static void deactivate() {
+		//main_frame.setOpacity(0.5f);
+		main_frame.setEnabled(false);
+		//main_frame.setFocusable(false);
+	}
+	public static void activate() {
+		//main_frame.setOpacity(0.5f);
+		main_frame.setEnabled(true);
+		//main_frame.setFocusable(false);
 	}
     
 }

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,8 +13,7 @@ import model.ProductManager;
 
 @SuppressWarnings("serial")
 public class SaveProductAction extends AbstractAction {
-	public static final Logger logger = LogManager.getLogger(ProductManager.class);
-	float qty = 0;
+	public static final Logger logger = LogManager.getLogger(SaveProductAction.class);
 
 	SaveProductAction(){
 		super("Salva Prodotto");
@@ -24,18 +24,24 @@ public class SaveProductAction extends AbstractAction {
 		String name = MainWindow.getFormName();
 
 		if (name.equals("")) {
-			logger.error("Operazione interrotta, inserisci un nome valido!");
+			errorMessage("Inserisci un nome valido.");
 		} else {
-			ProductManager.saveProduct(
+			if (ProductManager.saveProduct(
 					name, 
 					toFloat(MainWindow.getFormWeight()), 
 					toInt(MainWindow.getFormQty()),
 					toInt(MainWindow.getFormCal()),
-					(LocalDate) MainWindow.getExpDate());
-			MainWindow.matrixInit();
-			logger.info("Prodotto Salvato!");			
+					(LocalDate) MainWindow.getExpDate()) == 0) {
+				JOptionPane.showMessageDialog(
+						MainWindow.getMainFrame(), 
+						"Prodotto Aggiunto.");			
+				
+				MainWindow.matrixInit();
+			} else errorMessage("Non è stato possibile salvare il prodotto.");
+			
 		}
 	}
+	
 	
 	private float toFloat(String s){
 		float t;
@@ -58,5 +64,13 @@ public class SaveProductAction extends AbstractAction {
 			t=0;
 		}
 		return t;
+	}
+	
+	private void errorMessage(String s) {
+		JOptionPane.showMessageDialog(
+				MainWindow.getMainFrame(), 
+				s, 
+				"Qualcosa è andato storto...",
+			    JOptionPane.ERROR_MESSAGE);
 	}
 }
