@@ -13,12 +13,16 @@ import org.apache.logging.log4j.LogManager;
 
 public class ProductManager {
 	public static Logger logger = LogManager.getLogger(ProductManager.class);
-	private static EntityManagerFactory entity_manager_factory	= Persistence.createEntityManagerFactory("product");
+	private static EntityManagerFactory entity_manager_factory	= Persistence.createEntityManagerFactory("pantry");
 	private static EntityManager entity_manager = entity_manager_factory.createEntityManager();
 	private static CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 	
 	public static void main(String[] args) {
 			//run(OperationMode.SAVE, new Product("banane", 0f, 0, 0, null));	
+	}
+	
+	public static int saveProduct(Product to_save) {
+		return run(OperationMode.SAVE, to_save);		
 	}
 	
 	public static int saveProduct(String name, float weight, int qty, int calories, LocalDate exp_date) {
@@ -31,6 +35,9 @@ public class ProductManager {
 		return run(OperationMode.DELETE, to_delete);
 	}
 	
+	public static void modifyProduct(Product p) {
+		run(OperationMode.MODIFY, p);
+	}
 	
 	/*
 	public static void modifyProduct(String name, float weight, int qty, float calories, LocalDate exp_date) {
@@ -69,7 +76,7 @@ public class ProductManager {
 		return state;
 	}
 	
-	private static void mergeProduct(Product p) {
+	public static void mergeProduct(Product p) {
 		try {
 			  Product to_change = getProductsByName(p.getName()).get(0);
 			  p.setId(to_change.getId());
@@ -116,4 +123,5 @@ public class ProductManager {
 		
 		return entity_manager.createQuery(criteria).getResultList();
 	}
+
 }

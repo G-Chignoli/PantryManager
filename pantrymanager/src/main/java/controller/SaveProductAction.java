@@ -24,7 +24,7 @@ public class SaveProductAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		String name = MainWindow.getFormName();
 
-		if (name.equals("")) {
+		if (name.isBlank()) {
 			errorMessage("Inserisci un nome valido.");
 		} else {
 			if (ProductManager.saveProduct(
@@ -33,12 +33,14 @@ public class SaveProductAction extends AbstractAction {
 					toInt(MainWindow.getFormQty()),
 					toInt(MainWindow.getFormCal()),
 					(LocalDate) MainWindow.getExpDate()) == 0) {
+
+				MainWindow.matrixInit();
+				
 				JOptionPane.showMessageDialog(
 						MainWindow.getMainFrame(), 
 						"Prodotto Aggiunto.");			
 				
-				MainWindow.matrixInit();
-			} else errorMessage("Non è stato possibile salvare il prodotto.");
+			} else errorMessage("Non è stato possibile salvare il prodotto (prodotto già inserito).");
 			
 		}
 	}
@@ -53,7 +55,7 @@ public class SaveProductAction extends AbstractAction {
 			logger.warn("Inserisci un valore valido nei campi!");
 			t=0;
 		}
-		return t;
+		return Math.abs(t);
 	}
 	private int toInt(String s){
 		int t;
@@ -64,7 +66,7 @@ public class SaveProductAction extends AbstractAction {
 			logger.warn("Inserisci un valore valido nei campi!");
 			t=0;
 		}
-		return t;
+		return Math.abs(t);
 	}
 	
 	private void errorMessage(String s) {

@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.Action;
 import net.miginfocom.swing.MigLayout;
@@ -21,13 +20,14 @@ import java.time.ZoneId;
 import java.util.Date;
 import com.toedter.calendar.JDateChooser;
 
-import controller.AddAction;
+import controller.AddProductAction;
 import controller.DeleteProductAction;
 import controller.NextPageAction;
 import controller.PrevPageAction;
 import controller.RemoveButtonAction;
 import controller.SaveProductAction;
 import controller.SearchMtxAction;
+import model.Product;
 
 public class MainWindow {
 	
@@ -37,7 +37,7 @@ public class MainWindow {
 	private static JTextField p_search = new JTextField();
 	private static String last_comp_hovered = null;
 	private static LocalDate exp_date = null;
-	private static Action add_action = new AddAction();
+	private static Action add_action = new AddProductAction();
 	private static Action rmv_action = new RemoveButtonAction();
 	private static Action search_action = new SearchMtxAction();
 	private static Action next_page = new NextPageAction();
@@ -45,6 +45,7 @@ public class MainWindow {
 	private static JPanel[][] mtx_pls = new JPanel[MTX_SIZE][MTX_SIZE];
 	private static JLabel[][] mtx_lbs = new JLabel[MTX_SIZE][MTX_SIZE];
 	private static JButton[][] mtx_bts = new JButton[MTX_SIZE][MTX_SIZE];
+	private static JLabel[][] mtx_qty = new JLabel[MTX_SIZE][MTX_SIZE];
 	private static JPanel p_matrix_pl = new JPanel();
 	private static JTextField form_name_tf = new JTextField(15);
 	private static JTextField form_qty_tf = new JTextField(15);
@@ -165,7 +166,8 @@ public class MainWindow {
 	}
 	
 	public static void matrixInit() {
-		String[] p_names = MatrixRenderer.getProductsToShow(MainWindow.getProductSearchText());
+		//String[] p_names = MatrixRenderer.getProductsToShow(MainWindow.getProductSearchText());
+		Product[] p = MatrixRenderer.getProductsToShow(MainWindow.getProductSearchText());
 		int color = 255;
 		int k = 0;
 		
@@ -175,34 +177,46 @@ public class MainWindow {
 		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
-				JPanel p = new JPanel();
-				JLabel name = new JLabel(StringUtils.capitalize(p_names[k]));
-				JLabel qty = new JLabel("");
+				String name = p[k].getName();
+				
+				JPanel pl = new JPanel();
+				//JLabel name = new JLabel(StringUtils.capitalize(p_names[k]));
+				JLabel name_lb = new JLabel(StringUtils.capitalize(name));
+				JLabel qty = new JLabel(Integer.toString(p[k].getQty()));
 				JButton add = new JButton(add_action);
 				JButton remove = new JButton(rmv_action);
 				
-				p.setName("p" + i + j);
-				p.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
-				p.setBackground(new Color(color, color, 255));
-				p.setOpaque(true);
+				//pl.setName(p_names[k]);
+				pl.setName(p[k].getName());
+				pl.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
+				pl.setBackground(new Color(color, color, 255));
+				pl.setOpaque(true);
 				
-				p.addMouseListener(new MouseAdapter() {
+				pl.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseEntered(MouseEvent e) {
 						last_comp_hovered = e.getComponent().getName();
 					}
 				});
 				
-				mtx_pls[i][j] = p;
-				mtx_lbs[i][j] = name;
+				mtx_pls[i][j] = pl;
+				mtx_lbs[i][j] = name_lb;
 				mtx_bts[i][j] = add;
+				mtx_qty[i][j] = qty;
 				
-				p.add(name, "cell 0 0 3 1, alignx center, aligny center");
-				p.add(add, "cell 2 1, grow, alignx center, aligny center");
-				p.add(qty, "cell 1 1, alignx center, aligny center");
-				p.add(remove, "cell 0 1, grow, alignx center, aligny center");
-				p_matrix_pl.add(p, "cell " + j + " " + i +  ", grow");
 				
+				pl.add(name_lb, "cell 0 0 3 1, alignx center, aligny center");
+				pl.add(add, "cell 2 1, grow, alignx center, aligny center");
+				pl.add(qty, "cell 1 1, alignx center, aligny center");
+				pl.add(remove, "cell 0 1, grow, alignx center, aligny center");
+				p_matrix_pl.add(pl, "cell " + j + " " + i +  ", grow");
+				
+				//if(name.equals("-")) {
+				if(name.isBlank()) {
+					add.setEnabled(false);
+					remove.setEnabled(false);
+				}
+
 				color -= 10;
 				k++;
 			}

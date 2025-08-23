@@ -24,6 +24,7 @@ public class DeleteProductAction extends AbstractAction {
 			if (ProductManager.deleteProduct(name) == 0) {
 				
 			MainWindow.matrixInit();
+			
 			JOptionPane.showMessageDialog(
 					MainWindow.getMainFrame(), 
 					"Prodotto Eliminato.");	
