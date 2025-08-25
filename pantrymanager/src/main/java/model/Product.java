@@ -89,4 +89,9 @@ public class Product {
 	public void setExpirationDate(LocalDate expiration_date) {
 		this.expiration_date = expiration_date; 
 	}
+	
+	public boolean isDateSet() {
+		if (this.expiration_date != null) return true;
+		return false;
+	}
 }

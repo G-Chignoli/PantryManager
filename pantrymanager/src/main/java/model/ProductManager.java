@@ -17,10 +17,6 @@ public class ProductManager {
 	private static EntityManager entity_manager = entity_manager_factory.createEntityManager();
 	private static CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 	
-	public static void main(String[] args) {
-			//run(OperationMode.SAVE, new Product("banane", 0f, 0, 0, null));	
-	}
-	
 	public static int saveProduct(Product to_save) {
 		return run(OperationMode.SAVE, to_save);		
 	}
@@ -35,15 +31,15 @@ public class ProductManager {
 		return run(OperationMode.DELETE, to_delete);
 	}
 	
-	public static void modifyProduct(Product p) {
-		run(OperationMode.MODIFY, p);
+	public static int modifyProduct(Product p) {
+		return run(OperationMode.MODIFY, p);
 	}
 	
-	/*
-	public static void modifyProduct(String name, float weight, int qty, float calories, LocalDate exp_date) {
+	public static int modifyProduct(String name, float weight, int qty, float calories, LocalDate exp_date) {
 		Product to_change = new Product(name.toLowerCase(), weight, qty, calories, exp_date);
-		run(OperationMode.MODIFY, to_change);
+		return run(OperationMode.MODIFY, to_change);
 	}
+	/*
 	*/
 	
 	private static int run(OperationMode operation, Product product) {
@@ -59,7 +55,7 @@ public class ProductManager {
 				    state = removeProduct(product);
 			    break;
 			  case OperationMode.MODIFY:
-				  	mergeProduct(product);
+				  	state = mergeProduct(product);
 				break;
 			  case OperationMode.GET:
 				  getProducts();
@@ -76,14 +72,16 @@ public class ProductManager {
 		return state;
 	}
 	
-	public static void mergeProduct(Product p) {
+	public static int mergeProduct(Product p) {
 		try {
 			  Product to_change = getProductsByName(p.getName()).get(0);
 			  p.setId(to_change.getId());
 			  entity_manager.merge(p);
 		} catch (Exception e) {
 			logger.error("Impossibile modificare il prodotto.");
+			return 1;
 		}		
+		return 0;
 	}
 
 	private static int removeProduct(Product p) {

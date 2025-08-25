@@ -11,7 +11,7 @@ import view.MainWindow;
 public class DeleteProductAction extends AbstractAction {
 
 	public DeleteProductAction(){
-		super("Rimuovi Prodotto");
+		super("Elimina Prodotto");
 	}
 
 	@Override

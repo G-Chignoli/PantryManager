@@ -11,7 +11,8 @@ public class Launcher {
 				MainWindow main_window = new MainWindow();
 				main_window.initialize();
 				main_window.show();
-				//ErrorWindow.initialize();
+				main_window.showExpDates();
+				
 			}
 		});
 	}

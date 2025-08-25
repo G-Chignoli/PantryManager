@@ -10,6 +10,9 @@ import javax.swing.Action;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -22,11 +25,13 @@ import com.toedter.calendar.JDateChooser;
 
 import controller.AddProductAction;
 import controller.DeleteProductAction;
+import controller.ModifyProductAction;
 import controller.NextPageAction;
 import controller.PrevPageAction;
 import controller.RemoveButtonAction;
 import controller.SaveProductAction;
 import controller.SearchMtxAction;
+import controller.ShowExpirationDateAction;
 import model.Product;
 
 public class MainWindow {
@@ -42,6 +47,8 @@ public class MainWindow {
 	private static Action search_action = new SearchMtxAction();
 	private static Action next_page = new NextPageAction();
 	private static Action prev_page = new PrevPageAction();
+	private Action show_exp_date_action = new ShowExpirationDateAction();
+	
 	private static JPanel[][] mtx_pls = new JPanel[MTX_SIZE][MTX_SIZE];
 	private static JLabel[][] mtx_lbs = new JLabel[MTX_SIZE][MTX_SIZE];
 	private static JButton[][] mtx_bts = new JButton[MTX_SIZE][MTX_SIZE];
@@ -52,13 +59,14 @@ public class MainWindow {
 	private static JTextField form_weight_tf = new JTextField(15);
 	private static JTextField form_cal_tf = new JTextField(15);
 	private static JDateChooser exp_date_chooser = new JDateChooser(new Date(), " dd/MM/yyyy"); 
+	private JButton show_exp_date = new JButton(show_exp_date_action);
 	
 	public void initialize() {
 		
 		main_frame.setResizable(false);
 		main_frame.setTitle("PantryManager");
 		main_frame.setBounds(100, 100, 1300, 730);
-		main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		main_frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		main_frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
 		
@@ -85,6 +93,7 @@ public class MainWindow {
 		// PRODUCT FORM PANEL // 
 		Action save_product_action = new SaveProductAction();
 		Action delete_product_action = new DeleteProductAction();
+		Action modify_product_action = new ModifyProductAction();
 		
 		JLabel form_title = new JLabel("< GESTISCI PRODOTTO >");
 		JLabel form_name = new JLabel("Nome"); 
@@ -94,10 +103,10 @@ public class MainWindow {
 		JLabel form_exp_date = new JLabel("Data di Scadenza"); 
 		JButton save_product = new JButton(save_product_action);
 		JButton delete_product = new JButton(delete_product_action);
-		JButton modify_product = new JButton("Modifica Prodotto");
+		JButton modify_product = new JButton(modify_product_action);
 		
 		form_pl.setBackground(new Color(200, 200, 255));
-		form_pl.setLayout(new MigLayout("", "[200px][200px][200px]", "[][grow][grow][grow][grow][grow][grow][200px]"));
+		form_pl.setLayout(new MigLayout("", "[200px][200px][200px]", "[][grow][grow][grow][grow][grow][grow][grow][200px]"));
 		
 		form_name_tf.setToolTipText("Inserisci il nome del prodotto che vuoi salvare.");
 		form_qty_tf.setToolTipText("Inserisci quante unità vuoi salvare.");
@@ -109,10 +118,11 @@ public class MainWindow {
 				new PropertyChangeListener() {
 				@Override
 					public void propertyChange(PropertyChangeEvent e) {
-					LocalDate date = expDateToLocalDate();
+					//LocalDate date = toLocalDate();
+					LocalDate date = exp_date_chooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 					if( date.isAfter(today) ) {
 						setExpDate(date);
-					}
+					} else { setExpDate(null); }
 				}
 			});
 		
@@ -131,6 +141,7 @@ public class MainWindow {
 		form_pl.add(save_product, "cell 0 6, grow, grow");	
 		form_pl.add(delete_product, "cell 1 6, grow, grow");	
 		form_pl.add(modify_product, "cell 2 6, grow, grow");	
+		form_pl.add(show_exp_date, "cell 1 7, grow, grow");	
 		
 		
 
@@ -159,14 +170,12 @@ public class MainWindow {
 		product_pl.add(p_search_send, "cell 3 1,growx,aligny center");
 		
 		// Products Matrix Panel
-		
 		matrixInit();
 		product_pl.add(p_matrix_pl, "cell 0 2 5 3,grow");
 		
 	}
 	
 	public static void matrixInit() {
-		//String[] p_names = MatrixRenderer.getProductsToShow(MainWindow.getProductSearchText());
 		Product[] p = MatrixRenderer.getProductsToShow(MainWindow.getProductSearchText());
 		int color = 255;
 		int k = 0;
@@ -180,13 +189,11 @@ public class MainWindow {
 				String name = p[k].getName();
 				
 				JPanel pl = new JPanel();
-				//JLabel name = new JLabel(StringUtils.capitalize(p_names[k]));
 				JLabel name_lb = new JLabel(StringUtils.capitalize(name));
 				JLabel qty = new JLabel(Integer.toString(p[k].getQty()));
 				JButton add = new JButton(add_action);
 				JButton remove = new JButton(rmv_action);
 				
-				//pl.setName(p_names[k]);
 				pl.setName(p[k].getName());
 				pl.setLayout(new MigLayout("", "[65px:n:65px][40px:n:40px][65px:n:65px]", "[100px:n:100px][70px:n:70px]"));
 				pl.setBackground(new Color(color, color, 255));
@@ -211,7 +218,6 @@ public class MainWindow {
 				pl.add(remove, "cell 0 1, grow, alignx center, aligny center");
 				p_matrix_pl.add(pl, "cell " + j + " " + i +  ", grow");
 				
-				//if(name.equals("-")) {
 				if(name.isBlank()) {
 					add.setEnabled(false);
 					remove.setEnabled(false);
@@ -252,17 +258,17 @@ public class MainWindow {
 	public static String getFormCal() {
 		return form_cal_tf.getText();
 	}
-
-
-	public static LocalDate expDateToLocalDate() {
+	
+	/*
+	public static LocalDate toLocalDate() {
 		return exp_date_chooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
-	
+	*/
 	private static void setExpDate(LocalDate date) {
 		MainWindow.exp_date = date;
 	}
 
-	public static Object getExpDate() {
+	public static LocalDate getExpDate() {
 		return MainWindow.exp_date;
 	}
 	
@@ -270,15 +276,8 @@ public class MainWindow {
 		return MainWindow.main_frame;
 	}
 	
-	public static void deactivate() {
-		//main_frame.setOpacity(0.5f);
-		main_frame.setEnabled(false);
-		//main_frame.setFocusable(false);
-	}
-	public static void activate() {
-		//main_frame.setOpacity(0.5f);
-		main_frame.setEnabled(true);
-		//main_frame.setFocusable(false);
+	public void showExpDates() {
+		this.show_exp_date.doClick();
 	}
     
 }
