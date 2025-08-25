@@ -8,6 +8,7 @@ import model.Product;
 import model.ProductManager;
 import view.MainWindow;
 
+@SuppressWarnings("serial")
 public class AddProductAction extends AbstractAction{
 
 	public AddProductAction() {

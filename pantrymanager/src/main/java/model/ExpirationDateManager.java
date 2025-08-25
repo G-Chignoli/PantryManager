@@ -27,7 +27,6 @@ public class ExpirationDateManager {
 			if (date != null) {
 				int days_to_exp = (int) ChronoUnit.DAYS.between(LocalDate.now(), date);
 				if( days_to_exp <= MAX_DAYS && days_to_exp >= 0) {
-					System.out.println(days_to_exp);
 					output = output + StringUtils.capitalize(products.get(i).getName()) + " in scadenza il " + date + "\n";
 				} 
 			}

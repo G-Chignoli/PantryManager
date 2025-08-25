@@ -117,8 +117,8 @@ public class ProductManager {
 		Root<Product> root = criteria.from(Product.class);
 		
 		//criteria.select(root).where(builder.equal(root.get("name"), name ));
-		criteria.where(builder.like(root.get("name"), name.toLowerCase().concat("%")));
-		
+		criteria.where(builder.like(root.get("name"), name.toLowerCase().concat("%")));			
+		entity_manager.createQuery(criteria).getResultList();
 		return entity_manager.createQuery(criteria).getResultList();
 	}
 

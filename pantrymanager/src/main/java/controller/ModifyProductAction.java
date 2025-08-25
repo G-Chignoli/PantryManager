@@ -2,10 +2,13 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
+import java.util.NoSuchElementException;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import model.Product;
 import model.ProductManager;
@@ -13,7 +16,9 @@ import view.MainWindow;
 
 @SuppressWarnings("serial")
 public class ModifyProductAction extends AbstractAction {
-
+	
+	private static Logger logger = LogManager.getLogger(ModifyProductAction.class);
+	
 	public ModifyProductAction(){
 		super("Modifica Prodotto");
 	}
@@ -25,8 +30,14 @@ public class ModifyProductAction extends AbstractAction {
 		String weight   = MainWindow.getFormWeight();
 		String calories  = MainWindow.getFormCal();
 		LocalDate date = MainWindow.getExpDate();
+		Product p = new Product();
 		
-		Product p = ProductManager.getProductsByName(name).getFirst();
+		try {
+			p = ProductManager.getProductsByName(name).getFirst();
+		} catch (NoSuchElementException ex) {
+			logger.error("Il prodotto non è stato trovato"); 
+		}
+
 		
 		if(!qty.isBlank()) p.setQty(toInt(qty));
 		if(!weight.isBlank()) p.setWeight(toFloat(weight));
