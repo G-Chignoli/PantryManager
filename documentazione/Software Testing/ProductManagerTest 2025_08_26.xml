@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ProductManagerTest" project="pantrymanager" tests="6" started="6" failures="0" errors="0" ignored="0">
+  <testsuite name="model.ProductManagerTest" time="0.59" displayname="ProductManagerTest" uniqueid="[engine:junit-jupiter]/[class:model.ProductManagerTest]">
+    <testcase name="testSaveProductEmpty" classname="model.ProductManagerTest" time="0.409" displayname="testSaveProductEmpty()" uniqueid="[engine:junit-jupiter]/[class:model.ProductManagerTest]/[method:testSaveProductEmpty()]"/>
+    <testcase name="testSaveProductNull" classname="model.ProductManagerTest" time="0.009" displayname="testSaveProductNull()" uniqueid="[engine:junit-jupiter]/[class:model.ProductManagerTest]/[method:testSaveProductNull()]"/>
+    <testcase name="testSaveProduct" classname="model.ProductManagerTest" time="0.111" displayname="testSaveProduct()" uniqueid="[engine:junit-jupiter]/[class:model.ProductManagerTest]/[method:testSaveProduct()]"/>
+    <testcase name="testGetProducts" classname="model.ProductManagerTest" time="0.008" displayname="testGetProducts()" uniqueid="[engine:junit-jupiter]/[class:model.ProductManagerTest]/[method:testGetProducts()]"/>
+    <testcase name="testModifyProduct" classname="model.ProductManagerTest" time="0.029" displayname="testModifyProduct()" uniqueid="[engine:junit-jupiter]/[class:model.ProductManagerTest]/[method:testModifyProduct()]"/>
+    <testcase name="testDeleteProduct" classname="model.ProductManagerTest" time="0.023" displayname="testDeleteProduct()" uniqueid="[engine:junit-jupiter]/[class:model.ProductManagerTest]/[method:testDeleteProduct()]"/>
+  </testsuite>
+</testrun>

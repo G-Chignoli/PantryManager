@@ -18,7 +18,7 @@ public class ProductManager {
 	private static CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 	
 	public static int saveProduct(Product to_save) {
-		return run(OperationMode.SAVE, to_save);		
+		return run(OperationMode.SAVE, to_save);	
 	}
 	
 	public static int saveProduct(String name, float weight, int qty, int calories, LocalDate exp_date) {
