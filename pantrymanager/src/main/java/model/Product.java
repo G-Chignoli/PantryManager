@@ -16,7 +16,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
 	
-	@Column(name = "name", unique = true)
+	@Column(name = "name", unique = true, nullable = false)
 	protected String name;
 	
 	@Column(name = "weight")
