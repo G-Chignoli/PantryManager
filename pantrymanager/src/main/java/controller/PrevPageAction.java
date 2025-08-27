@@ -19,7 +19,7 @@ public class PrevPageAction extends AbstractAction implements Action {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		MatrixRenderer.browsePage(SwipePage.PREV);
-		MainWindow.matrixInit();
+		MainWindow.getInstance().matrixInit();
 		System.out.println(MatrixRenderer.getCurrentPage());
 	}
 

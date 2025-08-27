@@ -12,7 +12,7 @@ public class ShowExpirationDateAction extends AbstractAction {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ExpirationDateManager exp = new ExpirationDateManager();
+		new ExpirationDateManager();
 	}
 
 }

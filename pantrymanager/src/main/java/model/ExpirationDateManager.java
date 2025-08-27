@@ -32,7 +32,7 @@ public class ExpirationDateManager {
 			}
 			
 		}
-		JOptionPane.showMessageDialog(MainWindow.getMainFrame(), output);
+		JOptionPane.showMessageDialog(MainWindow.getInstance().getMainFrame(), output);
 	}
 	
 	

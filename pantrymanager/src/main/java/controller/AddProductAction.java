@@ -16,7 +16,7 @@ public class AddProductAction extends AbstractAction{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Product product = ProductManager.getProductsByName(MainWindow.getLastCompHovered()).getFirst();
+		Product product = ProductManager.getProductsByName(MainWindow.getInstance().getLastCompHovered()).getFirst();
 		int qty = product.getQty();
 		
 		qty++;
@@ -24,6 +24,6 @@ public class AddProductAction extends AbstractAction{
 		
 		ProductManager.modifyProduct(product);
 		
-		MainWindow.matrixInit();
+		MainWindow.getInstance().matrixInit();
 	}
 }

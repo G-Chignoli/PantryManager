@@ -17,6 +17,10 @@ public class ProductManager {
 	private static EntityManager entity_manager = entity_manager_factory.createEntityManager();
 	private static CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 	
+	public static void main(String[] args) {
+		run(OperationMode.SAVE, new Product());
+	}
+	
 	public static int saveProduct(Product to_save) {
 		return run(OperationMode.SAVE, to_save);	
 	}
