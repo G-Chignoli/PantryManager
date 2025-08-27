@@ -7,18 +7,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 	
 @Entity
-@Table(name = "PRODUCT")
+@Table(name = "PANTRY")
 public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
 	
-	@Column(name = "name", nullable = false)
+	@Column(name = "name", unique = true, nullable = false)
 	protected String name;
 	
 	@Column(name = "weight")
@@ -81,8 +79,8 @@ public class Product {
 	public void setWeight(float weight) {
 		this.weight= weight ; 
 	}
-	public void setQty(short qty) {
-		this.qty = qty; 
+	public void setQty(int i) {
+		this.qty = i; 
 	}
 	
 	public void setCalories(float calories) {
@@ -90,5 +88,10 @@ public class Product {
 	}
 	public void setExpirationDate(LocalDate expiration_date) {
 		this.expiration_date = expiration_date; 
+	}
+	
+	public boolean isDateSet() {
+		if (this.expiration_date != null) return true;
+		return false;
 	}
 }

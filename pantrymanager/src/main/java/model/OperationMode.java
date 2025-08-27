@@ -4,5 +4,6 @@ public enum OperationMode {
 	NULL,
 	SAVE,
 	DELETE,
-	MODIFY
+	MODIFY,
+	GET
 }

@@ -4,7 +4,6 @@ package model;
 import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -55,7 +54,7 @@ public class DishManager {
 	}
 
 	public static boolean checkForIngredient(String name) {
-		return !ProductManager.findProductByName(name).isEmpty();
+		return !ProductManager.getProductsByName(name).isEmpty();
 	}
 	
 	
