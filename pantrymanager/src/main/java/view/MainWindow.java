@@ -123,7 +123,7 @@ public class MainWindow {
 				new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
-				LocalDate date = toLocalDate();
+				LocalDate date = getExpLocalDate(exp_date_chooser.getDate());
 				if( date.isAfter(LocalDate.now()) ) {
 					setExpDate(date);
 				} else { setExpDate(null); }
@@ -250,8 +250,9 @@ public class MainWindow {
 		return form_cal_tf.getText();
 	}
 
-	public LocalDate toLocalDate() {
-		return exp_date_chooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	public LocalDate getExpLocalDate(Date date) {
+		//return exp_date_chooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 	private void setExpDate(LocalDate date) {
