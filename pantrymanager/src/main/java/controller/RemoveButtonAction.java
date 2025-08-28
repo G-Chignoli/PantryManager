@@ -16,7 +16,7 @@ public class RemoveButtonAction extends AbstractAction{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Product product = ProductManager.getProductsByName(MainWindow.getLastCompHovered()).getFirst();
+		Product product = ProductManager.getProductsByName(MainWindow.getInstance().getLastCompHovered()).getFirst();
 		int qty = product.getQty();
 		
 		if (qty > 0) {
@@ -26,6 +26,6 @@ public class RemoveButtonAction extends AbstractAction{
 			ProductManager.mergeProduct(product);
 		}
 		
-		MainWindow.matrixInit();
+		MainWindow.getInstance().matrixInit();
 	}
 }

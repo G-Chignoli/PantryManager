@@ -8,10 +8,9 @@ public class Launcher {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				MainWindow main_window = new MainWindow();
-				main_window.initialize();
-				main_window.show();
-				main_window.showExpDates();
+				MainWindow.getInstance().initialize();
+				MainWindow.getInstance().show();
+				MainWindow.getInstance().showExpProducts();
 				
 			}
 		});

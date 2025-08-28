@@ -22,22 +22,22 @@ public class SaveProductAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String name = MainWindow.getFormName();
+		String name = MainWindow.getInstance().getFormName();
 
 		if (name.isBlank()) {
 			errorMessage("Inserisci un nome valido.");
 		} else {
 			if (ProductManager.saveProduct(
 					name, 
-					toFloat(MainWindow.getFormWeight()), 
-					toInt(MainWindow.getFormQty()),
-					toInt(MainWindow.getFormCal()),
-					(LocalDate) MainWindow.getExpDate()) == 0) {
+					toFloat(MainWindow.getInstance().getFormWeight()), 
+					toInt(MainWindow.getInstance().getFormQty()),
+					toInt(MainWindow.getInstance().getFormCal()),
+					(LocalDate) MainWindow.getInstance().getExpDate()) == 0) {
 
-				MainWindow.matrixInit();
+				MainWindow.getInstance().matrixInit();
 				
 				JOptionPane.showMessageDialog(
-						MainWindow.getMainFrame(), 
+						MainWindow.getInstance().getMainFrame(), 
 						"Prodotto Aggiunto.");			
 				
 			} else errorMessage("Non è stato possibile salvare il prodotto (prodotto già inserito).");
@@ -71,7 +71,7 @@ public class SaveProductAction extends AbstractAction {
 	
 	private void errorMessage(String s) {
 		JOptionPane.showMessageDialog(
-				MainWindow.getMainFrame(), 
+				MainWindow.getInstance().getMainFrame(), 
 				s, 
 				"Qualcosa è andato storto...",
 			    JOptionPane.ERROR_MESSAGE);

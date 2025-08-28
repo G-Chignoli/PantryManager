@@ -16,17 +16,17 @@ public class DeleteProductAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String name = MainWindow.getFormName();
+		String name = MainWindow.getInstance().getFormName();
 
 		if (name.equals("")) {
 			errorMessage("Inserisci un nome valido.");
 		} else {
 			if (ProductManager.deleteProduct(name) == 0) {
 				
-			MainWindow.matrixInit();
+			MainWindow.getInstance().matrixInit();
 			
 			JOptionPane.showMessageDialog(
-					MainWindow.getMainFrame(), 
+					MainWindow.getInstance().getMainFrame(), 
 					"Prodotto Eliminato.");	
 			
 			} else errorMessage("Il prodotto non è stato eliminato (prodotto non trovato)");
@@ -36,7 +36,7 @@ public class DeleteProductAction extends AbstractAction {
 	
 	private void errorMessage(String s) {
 		JOptionPane.showMessageDialog(
-				MainWindow.getMainFrame(), 
+				MainWindow.getInstance().getMainFrame(), 
 				s, 
 				"Qualcosa è andato storto...",
 			    JOptionPane.ERROR_MESSAGE);
