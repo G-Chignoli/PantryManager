@@ -81,12 +81,36 @@
       	<groupId>org.springframework.data</groupId>
       	<artifactId>spring-data-bom</artifactId>
       	<version>2025.0.2</version>
-      	<scope>import</scope>
+      	<scope>compile</scope>
       	<type>pom</type>
     </dependency>
   </dependencies>
 
   <build>
+  	<plugins>
+  		<plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-shade-plugin</artifactId>
+	        <version>3.6.0</version>
+	          <configuration>
+	            <createDependencyReducedPom>false</createDependencyReducedPom>
+	            <transformers>
+	              <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+	                <mainClass>view.Launcher</mainClass>
+	              </transformer>
+	            </transformers>
+	          </configuration>
+	        <executions>
+	          <execution>
+	            <phase>package</phase>
+	            <goals>
+	              <goal>shade</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+	      </plugin>
+  	</plugins>
+  
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
@@ -115,8 +139,17 @@
           <version>3.3.0</version>
         </plugin>
         <plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.4.2</version>
+          <configuration>
+          	<archive>
+          		<manifest>
+          			<addClasspath>true</addClasspath>
+          			<mainClass>view.Launcher</mainClass>
+          		</manifest>
+          	</archive>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>

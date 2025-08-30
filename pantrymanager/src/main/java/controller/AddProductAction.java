@@ -1,8 +1,8 @@
 package controller;
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
+import java.util.List;
 
 import model.Product;
 import model.ProductManager;
