@@ -20,6 +20,8 @@ public class ExpirationDateManager {
 		final int MAX_DAYS = 3;
 		List<Product> products = ProductManager.getProducts();
 		String output = "";
+		
+		if(products.isEmpty()) return;
 
 		for (int i = 0; i < products.size(); i++) {
 			LocalDate date = products.get(i).getExpirationDate();
