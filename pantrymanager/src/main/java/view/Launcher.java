@@ -2,7 +2,7 @@ package view;
 
 import javax.swing.SwingUtilities;
 
-import utils.DatabaseInit;
+import database.DatabaseInit;
 
 public class Launcher {
 
