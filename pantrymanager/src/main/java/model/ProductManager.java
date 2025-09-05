@@ -18,7 +18,6 @@ public class ProductManager {
 	private static CriteriaBuilder builder = entity_manager.getCriteriaBuilder();
 	
 	public static void main(String[] args) {
-		run(OperationMode.SAVE, new Product());
 	}
 	
 	public static int saveProduct(Product to_save) {
@@ -48,20 +47,21 @@ public class ProductManager {
 	
 	private static int run(OperationMode operation, Product product) {
 		int state = 0;
+
 		try {
 			entity_manager.getTransaction().begin();
 			
 			switch(operation) {
-			  case OperationMode.SAVE:
+			  case SAVE:
 				   	state = persistProduct(product);
 			    break;
-			  case OperationMode.DELETE:				  
+			  case DELETE:				  
 				    state = removeProduct(product);
 			    break;
-			  case OperationMode.MODIFY:
+			  case MODIFY:
 				  	state = mergeProduct(product);
 				break;
-			  case OperationMode.GET:
+			  case GET:
 				  getProducts();
 				  break;
 			  default:
