@@ -23,7 +23,7 @@ public class RemoveButtonAction extends AbstractAction{
 			qty--;
 			product.setQty(qty);
 			
-			ProductManager.mergeProduct(product);
+			ProductManager.modifyProduct(product);
 		}
 		
 		MainWindow.getInstance().matrixInit();
