@@ -1,0 +1,130 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{makecell}
+\usepackage[T1]{fontenc}
+\usepackage{minted}
+%\usepackage{tgpagella}      
+\usepackage[dvipsnames]{xcolor}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tgpagella} 
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\RequirePackage{fontawesome}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, 
+    linktoc=all,     
+    linkcolor=black!80,
+    filecolor=blue,
+    urlcolor=cyan!80
+}
+\usepackage{geometry}
+\geometry{a4paper, total={5.5in, 9in}}
+\renewcommand{\arraystretch}{1.4}
+\newcommand{\must}{\cellcolor{Green}{M}}
+\newcommand{\should}{\cellcolor{LimeGreen}{S}}
+\newcommand{\could}{\cellcolor{RedOrange}{C}}
+\newcommand{\wont}{\cellcolor{BrickRed}{W}}
+
+\tcbset{%
+    theoLeft/.style={%
+        enhanced,
+        breakable,
+        sharp corners,
+        toprule=1mm, rightrule=0pt, bottomrule=1mm, leftrule=0pt,
+        colback=#1!5, colframe=white, coltitle=#1!80!black, 
+        detach title,
+        overlay unbroken and first ={
+            \node[minimum width=1cm, anchor=north west, font=\bfseries] 
+               at ([yshift={.4cm}]frame.north west) {\tcbtitle};
+        }
+    }
+}
+
+\definecolor{exampleBox}{RGB}{ 121, 54, 149  }
+
+\newtcbtheorem[auto counter]{code}{}
+{theoLeft=exampleBox}{cl}
+
+\title{\huge Maintenance}
+\author{Gabriele Chignoli}
+\date{Agosto 2025}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduzione}
+Nel seguente documento vengono elencate alcune delle maggiori attività di refactoring eseguite sul progetto. 
+
+\section{Attività}
+\subsection{Ridenominazione Metodi - 01/08/2025}
+\`E stata corretta la denominazione dei metodi presenti nella classe \textit{ObjectManager} per i quali non si erano rispettate le convenzioni sulla scrittura del codice presenti nel Project Plan. Essendo un'operazione semplice non c'è stato bisogno di alcuna pianificazione. 
+
+\subsection{Refactoring - 16/08/2025}
+\paragraph{Obiettivo} Rendere più leggibile e più corretto come la GUI gestisce la rappresentazione della matrice dei (9) prodotti, la sua generazione e come si passa da una pagina all'altra. 
+\paragraph{branch} 
+\begin{code*}{}
+\begin{center}
+\texttt{main/GUI/db-interaction}
+\end{center}
+\end{code*}
+\paragraph{\texttt{MainWindow}} Il codice per la inizializzazione della matrice è stato messo in un metodo (\texttt{matrixInit}) che prende i nomi dei prodotti da mostrare (\texttt{p\_names}) chiamando la classe \texttt{MatrixRenderer}, che è quella che interagisce con le classi che eseguono le operazioni effettive sul database. Così facendo il metodo può essere chiamato dalle operazioni (le azioni dei pulsanti, per esempio) che hanno bisogno di aggiornare la matrice. 
+\begin{code*}{}
+\begin{minted}{java}
+public static void matrixInit() {
+    String[] p_names = MatrixRenderer.getProductsToShow(
+        MainWindow.getProductSearchText());
+    ...
+}
+\end{minted}
+\end{code*}
+\paragraph{\texttt{MatrixRenderer}} Per cambiare pagina, la classe incrementa/decrementa un valore che poi viene utilizzato come indice di partenza per prelevare i prodotti dalla lista che viene ritornata dalle ricerche nel database. Per cambiare questo valore (\texttt{current\_page}) è stata introdotta una classe (\texttt{brosePage}) che utilizza un tipo enumerativo per determinare se aggiungere o togliere all'indice. Il metodo viene chiamato dalle azioni dei pulsanti, che specificano se richiedono di andare alla pagina precedente o successiva. Si ritiene questa soluzione più pulita e chiara al lettore. 
+\begin{code*}{}
+\begin{minted}{java}
+public static void browsePage(SwipePage operation) {
+    switch(operation) {
+        case SwipePage.NEXT:
+            current_page ++;
+        break;
+        case SwipePage.PREV:
+            current_page --;
+        break;
+        default:
+    }    
+}
+\end{minted}
+\end{code*}
+dove \texttt{SwipePage} è un tipo enumerativo per aumentare la leggibilità. Le classi delle azioni che eseguono i componenti dell'interfaccia saranno inoltre spostate nella cartella \texttt{controller}, per cercare di rispettare meglio il paradigma MVC. 
+
+
+\subsection{Refactoring - 27/08/2025}
+\paragraph{Obiettivo} Rendere più leggibile la classe \texttt{MainWindow} che gestisce la finestra principale dell'applicazione, limitando in particolare l'utilizzo di variabili e metodi \texttt{static}. Viene inoltre riscritta per rispettare il paradigma \textit{singleton}. 
+\paragraph{branch} 
+\begin{code*}{}
+\begin{center}
+\texttt{main/mainWindow-refactor}
+\end{center}
+\end{code*}
+\paragraph{\texttt{MainWindow}} Si è deciso di applicare il pattern \textit{singleton} alla classe poiché si ritiene che questa debba essere istanziata una sola volta, e i componenti che ci interagiscano debbano accedere a questa unica istanza.  
+\begin{code*}{}
+\begin{minted}{java}
+public static MainWindow getInstance() {
+    if(instance == null) {
+    	instance = new MainWindow();
+    }
+    return instance;
+}
+
+\end{minted}
+\end{code*}
+
+Il codice qui sopra istanzia una pagina solo se non lo è già stata, e fornisce ai componenti esterni un handle per interagire con la schermata. \newline 
+
+
+Il codice è stato inoltre ordinato e formattato più correttamente, rendendo la lettura più semplice. Purtroppo si ritiene che questa classe "faccia troppe cose" e andrebbe snellita estrapolando metodi delegando, per esempio, l'aggiunta di pulsanti/pannelli ad altri componenti. 
+
+
+
+\end{document}
