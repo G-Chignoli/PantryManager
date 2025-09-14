@@ -1,0 +1,178 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{makecell}
+\usepackage[T1]{fontenc}
+\usepackage{minted}
+%\usepackage{tgpagella}      
+\usepackage[dvipsnames]{xcolor}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tgpagella} 
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\RequirePackage{fontawesome}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, 
+    linktoc=all,     
+    linkcolor=black!80,
+}
+\usepackage{geometry}
+\geometry{a4paper, total={5.5in, 9in}}
+\renewcommand{\arraystretch}{1.4}
+\newcommand{\must}{\cellcolor{Green}{M}}
+\newcommand{\should}{\cellcolor{LimeGreen}{S}}
+\newcommand{\could}{\cellcolor{RedOrange}{C}}
+\newcommand{\wont}{\cellcolor{BrickRed}{W}}
+
+\tcbset{%
+    theoLeft/.style={%
+        enhanced,
+        breakable,
+        sharp corners,
+        toprule=1mm, rightrule=0pt, bottomrule=1mm, leftrule=0pt,
+        colback=#1!5, colframe=white, coltitle=#1!80!black, 
+        detach title,
+        overlay unbroken and first ={
+            \node[minimum width=1cm, anchor=north west, font=\bfseries] 
+               at ([yshift={.4cm}]frame.north west) {\tcbtitle};
+        }
+    }
+}
+
+\definecolor{exampleBox}{RGB}{ 121, 54, 149  }
+
+\newtcbtheorem[auto counter]{code}{}
+{theoLeft=exampleBox}{cl}
+
+\title{\huge Testing}
+\author{Gabriele Chignoli}
+\date{Luglio 2025}
+\begin{document}
+\setcounter{tocdepth}{5}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduzione}
+Nel seguente documento vengono mostrate le varie attività di test eseguito sul software Pantrymanager. Si intende documentare per ogni componente testata il nome e la posizione del componente, la data di esecuzione, il tipo e l'obiettivo del test ed i risultati ottenuti.
+
+\section{Test Unitari}
+\subsection{Costruttore classe \texttt{Product} - 25/07/2025}
+
+\paragraph{Obiettivo}
+Viene testato il costruttore di oggetti \textit{Product}
+\begin{code*}{}
+\begin{minted}{java}
+public Product(String name, float weight, int qty, 
+    float calories, LocalDate expiration_date) {
+	... 
+}
+    \end{minted}
+\end{code*}
+
+\paragraph{Input}
+Sono stati utilizzati 5 valori differenti per testare il nome del prodotto, 5 per il peso, e solamente 1 per gli altri attributi. Sono stati inclusi anche valori che non hanno senso per quello che rappresentano, ma verranno vincolati più avanti e ad un livello superiore della struttura, verso l'interfaccia utente.  
+
+\paragraph{Aspettative e risultati}
+Il test era molto semplice e testava una parte molto piccola di codice che difficilmente risulta problematica. L'obiettivo era prendere confidenza con JUnit, per poi provare a seguire in futuro anche un approccio guidato dei test. 
+
+I risultati del test vengono caricati attraverso un file xml esportato direttamente da Eclipse. 
+
+\paragraph{Directory Componente} 
+\begin{code*}
+    .../src/main/java/controller/Product.java
+\end{code*}
+\paragraph{Directory Test} 
+\begin{code*}
+    .../src/test/java/controller/ProductTest.java
+\end{code*}
+
+\subsection{\texttt{ProductManager} - 26/08/2025}
+\paragraph{Obiettivo} Viene testata la classe \texttt{ProductManager} che effettua le operazioni sul DataBase, in particolare i seguenti metodi: 
+\begin{code*}{}
+\begin{minted}{java}
+public static int saveProduct(Product to_save) {
+    return run(OperationMode.SAVE, to_save);	
+}
+
+public static int deleteProduct(String name) {
+    ...
+    return run(OperationMode.DELETE, to_delete);
+}
+
+public static int modifyProduct(Product p) {
+    return run(OperationMode.MODIFY, p);
+}
+
+public static List<Product> getProducts() {
+	...
+    return entity_manager.createQuery(criteria).getResultList();
+}
+
+\end{minted}
+\end{code*}
+
+\paragraph{Input} Sono stati utilizzati diversi prodotti, per i quali viene verificato che le operazioni abbiano correttamente salvato, eliminato o modificato nel database \texttt{PANTRY.mv.db}. 
+
+\paragraph{Aspettative e risultati}
+Il test voleva verificare principalmente una corretta interazione con il database, per la quale si considera il test superato; tuttavia ha anche evidenziato come gli input vengano semplicemente salvati senza essere controllati. In particolare, a parte il nome che non può essere omesso e che deve essere unico, gli altri parametri numerici possono assumere valori negativi o comunque non voluti se si agisce a questo livello. 
+
+Passando per l'interfaccia grafica questo problema viene evitato non permettendo all'utente di inserire certi valori; rimane da decidere se introdurre un ulteriore verifica a questo stadio. 
+
+\paragraph{Directory Componente} 
+\begin{code*}
+    .../src/main/java/controller/ProductManager.java
+\end{code*}
+\paragraph{Directory Test} 
+\begin{code*}
+    .../src/test/java/controller/ProductManagerTest.java
+\end{code*}
+
+\subsection{\texttt{MainWindow} - 28/08/2025}
+\paragraph{Obiettivo} Viene testata la classe \texttt{MainWindow} che gestisce l'interfaccia grafica. Purtroppo la classe non risulta facilmente testabile: per i metodi getter l'operazione è immediata, mentre per verificare che l'interfaccia grafica si comporti correttamente si è stati in grado solo di verificare che venisse instanziata la classe e fossero ritornati i valori attesi.  
+
+\paragraph{Input} Non sono stati utilizzati input ma si è verificato che la classe istanziasse o non istanziasse (ritornasse null) per i metodi getter. Si consiglia la visione dei file su \textit{Github}. 
+
+\paragraph{Aspettative e risultati}
+Il test dell'interfaccia rimane un'attività da approfondire, poiché, pur essendo stato verificato durante lo sviluppo che gli input fossero salvati e modificati correttamente utilizzando l'interazione e verifica manuale dello sviluppatore, sarebbe più opportuno automatizzare il processo. 
+
+Una delle possibili soluzione sarebbe predisporre la classe \texttt{MainWindow} di metodi che simulino l'input dell'utente modificando i campi senza passare per l'interfaccia, ma agendo sui componenti direttamente. Poi attraverso una classe esterna eseguire i metodi e verificarne l'output. 
+
+\paragraph{Directory Componente} 
+\begin{code*}
+    .../src/main/java/view/MainWindow.java
+\end{code*}
+\paragraph{Directory Test} 
+\begin{code*}
+    .../src/test/java/view/MainWindow.java
+\end{code*}
+
+\subsection{Test di Sistema}
+Risultati di tutti i test eseguiti insieme. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\linewidth]{imgs/test_result.png}
+    \caption{System Test results}
+    \label{fig:placeholder}
+\end{figure}
+
+\subsection{Test di Copertura}
+Viene mostrato quanto codice i test coprono, ovvero quante righe di codice eseguono (raggiungono) e testano.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{imgs/coverage.png}
+    \caption{Test Coverage}
+    \label{fig:placeholder}
+\end{figure}
+\paragraph{Considerazioni}
+\begin{itemize}
+    \item Come si può vedere non si è riusciti a testare le azioni del \texttt{controller}, legate alla interfaccia utente.
+    \item Le classi legate a \texttt{dish} non sono utilizzate nella versione rilasciata e quindi non sono state testate.
+    \item \texttt{MainWindow} ha una buona copertura ma non si ritiene comunque di aver testato al meglio la classe.
+\end{itemize}
+
+
+
+
+\end{document}

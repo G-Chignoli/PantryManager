@@ -1,0 +1,202 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{makecell}
+\usepackage[T1]{fontenc}
+%\usepackage{tgpagella}      
+\usepackage[dvipsnames]{xcolor}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tgpagella} 
+\usepackage{xfrac} 
+\usepackage{float} 
+\usepackage{amssymb}
+\usepackage{colortbl}
+\RequirePackage{fontawesome}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, 
+    linktoc=all,     
+    linkcolor=black!80,
+    filecolor=blue,
+    urlcolor=cyan!80
+}
+\usepackage{geometry}
+\geometry{a4paper, total={5.5in, 9in}}
+\renewcommand{\arraystretch}{1.4}
+\newcommand{\must}{\cellcolor{Green}{M}}
+\newcommand{\should}{\cellcolor{LimeGreen}{S}}
+\newcommand{\could}{\cellcolor{RedOrange}{C}}
+\newcommand{\wont}{\cellcolor{BrickRed}{W}}
+
+\title{\huge Specifica dei Requisiti}
+\author{Gabriele Chignoli}
+\date{Maggio 2025}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Ingegneria dei Requisiti}
+\subsection{Elicitazione}
+I requisiti sono stati elicitati operando direttamente sul team di sviluppo poiché l'idea originale del software è nata da reali necessità riscontrate nella vita personale dei membri. Si può attribuire a tale metodologia un carattere etnografico, in cui lo sviluppatore ha vissuto in prima persona l'ambiente del cliente, ed è quindi in grado di avere una buona comprensione dei requisiti necessari e delle loro priorità, senza farsi confondere da "fischietti e campanelli".  
+
+\subsection{Utenti}
+L'applicativo è costruito per l'utilizzo in un ambiente ridotto, in cui il numero di prodotti da gestire/catalogare è limitato; difatti si considera l'ambiente casalingo il più adatto (e sensato) in cui utilizzare l'applicazione. Per questo la tipologia di utente con cui entrerà in contatto il software saranno persone a cui non è richiesta alcuna preparazione tecnica, se non una minima familiarità con sistemi digitali forniti di interfaccia grafica. \newline 
+
+Viene illustrato nella \textit{Figure 1} il diagramma dei casi d'uso, volto a mostrare le interazioni degli utenti (attori) con l'intero sistema e le operazioni che possono eseguire (casi d'uso).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{imgs/UseCaseDIagram_0.1.0.png}
+    \caption{Diagramma dei casi d'uso}
+    \label{fig:enter-label}
+\end{figure}
+
+
+%Si intende comunque mettere a disposizione in versioni future del software funzionalità più approfondite dal punto di vista tecnico, che si confida aggiungeranno valore per gli utenti più esperti e pratici.   
+
+\subsection{Definizioni}
+\begin{center}
+    \begin{tabular}{p{50pt}p{300pt}}
+    \toprule
+         \textbf{\textit{\hypertarget{caloria}{Chilocaloria [kcal]}}} & Rappresenta la quantità di calore necessaria per innalzare la temperatura di 1 Kg di acqua distillata da 14,5°C a 15,5°C. Viene utilizzata in ambito alimentare come metrica per il potere calorico contenuto negli alimenti, cioè per misurare quanta "energia" è contenuta nell'alimento. \\
+         \textbf{\textit{\hypertarget{dispensa}Dispensa (Pantry)}} & Nominativo con cui ci si riferisce all'inventario attuale dell'utente (e quindi all'insieme dei prodotti alimentari, di qualsiasi genere, di cui l'utente vuole tenere traccia).    \\
+         \textbf{\textit{\hypertarget{home}{Schermata Home}}} & Si riferisce alla prima schermata dell'interfaccia grafica che l'applicazione mostra all'utente all'avvio.  \\ 
+         \textbf{\textit{\hypertarget{sweb}{Servizio Web\newline Esterno}}} & Si riferisce all'utilizzo di una connessione Internet per ricercare in rete un informazione mancante, attraverso l'invio di una richiesta (HTTP) ad un ente in grado di fornire il dato. \\ 
+         \textbf{\textit{\hypertarget{unità}{Unità}}} & Si riferisce alla più piccola parte ("atomica") di un prodotto, al livello di dettaglio che interessa all'utente, cioè al singolo barattolo/bottiglia/confezione/sacchetto/busta/frutto/vegetale/cassetta\newline /scatola etc. \\ 
+         \textbf{\textit{Profilo}} & Si riferisce ad un entità digitale identificata da un nome, che rappresenta un utente reale. \\ 
+    \bottomrule
+    \end{tabular} 
+\end{center}
+\subsection{Abbreviazioni}
+\begin{center}
+    \begin{tabular}{p{50pt}p{300pt}}
+    \toprule
+         \textit{FUNZ} & Requisiti funzionali  \\
+         \textit{GUI} & Requisiti dell'interfaccia grafica  \\
+    \bottomrule
+    \end{tabular} 
+\end{center}
+
+\subsection{Priorità}
+Nella tabella dei requisiti della sezione $1.7$ viene specificata, oltre all'ID del requisito ed alla sua descrizione, la priorità attribuitagli, secondo lo schema \textit{\textbf{{MoSCoW}}}, per il quale si possono suddividere i requisiti in 
+\begin{itemize}
+    \item \textbf{Must Have} - requisiti assolutamente necessari. Verrà indicato con \hspace{.1cm} \begin{tabular}{c}
+    \rowcolor{Green}
+         M  \\ 
+    \end{tabular}
+    \item \textbf{Should Have} - requisiti importanti, ma non assolutamente necessari per un sistema utilizzabile. Verrà indicato con \hspace{.1cm} \begin{tabular}{c}
+    \rowcolor{LimeGreen}
+         S  \\ 
+    \end{tabular}
+    \item \textbf{Could Have} - requisiti che vengono implementati solo se il tempo lo consente. Verrà indicato con \hspace{.1cm} \begin{tabular}{c}
+    \rowcolor{RedOrange}
+         C  \\ 
+    \end{tabular}
+    \item \textbf{Won't Have} - requisiti non richiesti che rimarranno per la prossima iterazione. Verrà indicato con \hspace{.1cm} \begin{tabular}{c}
+    \rowcolor{BrickRed}
+         W  \\ 
+    \end{tabular}
+\end{itemize}
+
+\subsection{Implementazione}
+Nella tabella dei requisiti della sezione $1.7$ viene segnato (attraverso il simbolo: \checkmark) se il requisito è stato implementato nella versione rilasciata all'utente.
+
+\subsection{Requisiti}
+\paragraph{Funzionali}
+
+\begin{center}
+    \begin{longtable}{p{50pt}p{250pt}cc}
+    \toprule
+        ID & Descrizione & Priorità & Impl. \\
+        \midrule
+         \textit{FUNZ.1} & Il sistema dovrebbe utilizzare una \textit{\hyperlink{dispensa}{Dispensa}} per tenere traccia dei prodotti in possesso dell'utente. & \must & \checkmark  \\
+         \textit{FUNZ.2} & Il sistema dovrebbe permettere di aggiungere/modificare/rimuovere un prodotto dalla \textit{Dispensa}. & \must & \checkmark \\
+         \textit{FUNZ.3} & Il sistema dovrebbe tenere traccia, per ogni prodotto, delle seguenti informazioni:
+         \begin{itemize}
+             \item Nome del prodotto
+             \item Data di scadenza
+             \item Quantità (peso, in chilogrammi/grammi [$kg$,$g$], volume, in litri/millilitri [$L$,$ml$] e/o numero di \textbf{\textit{\hyperlink{unità}{Unità}}})
+             \item Calorie per quantità (in chilocalorie per $100g$ di prodotto [$\sfrac{\hyperlink{caloria}{kcal}}{100g}$])
+         \end{itemize}& \must & \checkmark \\
+         \textit{FUNZ.4} & Il sistema dovrebbe contenere già al suo interno le informazioni per prodotto riportate nel requisito \textit{FUNZ.3} degli alimenti più comuni.  & \could \\
+         \textit{FUNZ.5} & Il sistema dovrebbe poter recuperare le informazioni per prodotto riportate nel requisito \textit{FUNZ.3} utilizzando un \textit{Servizio Web Esterno}, indipendente dall'applicazione. & \wont  \\
+         \textit{FUNZ.6} & Il sistema dovrebbe permettere all'utente di aggiornare/modificare/cancellare le informazioni riportate nel requisito \textit{FUNZ.3} per ogni prodotto. & \must & \checkmark \\
+         \textit{FUNZ.7} & Il sistema dovrebbe permettere di aggiungere/modificare/eliminare ricette. Per ogni ricetta il sistema memorizza i seguenti dati
+         \begin{itemize}
+             \item Quantità (per ingrediente)
+             \item Note di preparazione
+             \item Tempo di preparazione (in minuti [$min$])
+         \end{itemize}& \should \\
+         \textit{FUNZ.8} & Il sistema dovrebbe permettere di impostare l'obiettivo calorico giornaliero per l'utente principale.  & \could \\
+         \textit{FUNZ.9} & Il sistema dovrebbe essere in grado di calcolare (in modo approssimativo) il fabbisogno calorico necessario per l'utente, utilizzando i seguenti parametri (inseriti dall'utente): \begin{itemize}
+             \item Peso dell'individuo (in chilogrammi)
+             \item Altezza dell'individuo (in centimetri)
+             \item Attività fisica svolta 
+             \begin{itemize}
+                 \item Tipo di attività 
+                 \item Durata dell'esercizio (minuti)
+             \end{itemize}
+         \end{itemize}  & \wont \\
+         \textit{FUNZ.10} & Il sistema dovrebbe permettere di creare dei \textit{Profili} che identificano un individuo di cui si vuole impostare un obiettivo calorico. & \could \\
+         \textit{FUNZ.10.1} & Il sistema dovrebbe permettere di impostare l'obiettivo calorico giornaliero per ogni Profilo.  & \could \\
+         \textit{FUNZ.11} & Il sistema dovrebbe permettere di creare una \textit{Lista della spesa} in cui l'utente può aggiungere prodotti che ha intenzione/necessità di acquistare. & \wont \\
+         \textit{FUNZ.12} & Il sistema dovrebbe permette di recuperare ricette attraverso un Servizio Web esterno, e proporle all'utente. & \wont \\
+         \textit{FUNZ.13} & Il sistema dovrebbe notificare l'utente quando un prodotto sta per scadere. & \must & \checkmark \\
+         \textit{FUNZ.13.1} & La notifica verrà inviata 3 giorni prima della scadenza. & \should & \checkmark \\
+         \bottomrule
+    \end{longtable} 
+\end{center}
+
+\paragraph{Graphic User Interface (GUI)}
+\begin{center}
+    \begin{longtable}{p{50pt}p{250pt}cc}
+    \toprule
+        ID & Descrizione & Priorità & Impl. \\
+        \midrule
+         \textit{GUI.1} & L'interfaccia utente dovrebbe rispondere in modo reattivo agli input dell'utente, fornendo un feedback visivo. & \should & \checkmark \\
+         \textit{GUI.2} & La data di scadenza dei prodotti sarà segnata \begin{itemize}
+             \item In giallo per i prodotti in scadenza (cioè a 3 giorni dalla data limite del prodotto)
+             \item In rosso per i prodotti che hanno superato la data di scadenza
+         \end{itemize} & \should \\
+         \textit{GUI.3} & Il sistema dovrebbe permettere all'utente di rimuovere velocemente i prodotti che ha utilizzato. & \should & \checkmark \\
+         \textit{GUI.4} & L'interfaccia dovrebbe disporre di una schermata principale detta "\textbf{\textit{\hyperlink{home}{Schermata Home}}}" (da qui in poi detta semplicemente "Home"). & \must & \checkmark \\
+         \textit{GUI.4.1} & La Home dovrebbe mostrare i prodotti e disporli in un ordinamento a matrice o ad elenco. & \must & \checkmark\\
+         \textit{GUI.4.2} & Dovrebbero venire mostrate le immagini dei prodotti. & \should \\
+         \textit{GUI.4.3} & Dovrebbero venire mostrati i nomi dei prodotti. & \should & \checkmark \\
+         \textit{GUI.5} & In caso l'applicazione vada in background, o venga sospesa, quando viene riattivata deve tornare all'ultima schermata su cui era prima della sospensione. & \wont \\
+         \textit{GUI.6} & Il requisito \textit{GUI.3} dovrebbe essere soddisfatto ponendo un pulsante "+" e un pulsante "-" sotto le immagini dei prodotti. & \should & \checkmark \\
+         \bottomrule
+    \end{longtable} 
+\end{center}
+
+\section{UML}
+\subsection{State Machine Diagram}
+Si rappresentano di seguito i diagrammi UML delle Macchine a Stati Finiti che modellano alcune parti del software; in particolare vengono rappresentati gli stati in cui dovrebbe trovarsi l'interfaccia grafica per l'utente (GUI, \textit{Figure 3}), e i possibili stati di un prodotto della dispensa (\textit{Figure 2}). 
+\newline 
+
+\textit{\textcolor{black!60}{La visione dei modelli UML è disponibile anche dal repository Github del progetto.}}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{imgs/ProdottoSttMchnDgrm.png}
+    \caption{Product State Machine Diagram}
+    \label{fig:enter-label}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{imgs/GuiStateMachineDiagram_0.1.0.png}
+    \caption{GUI State Machine Diagram}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Qualità del Software}
+Si è deciso di non adottare uno standard predefinito per la definizione dei requisiti di qualità, poiché si ritiene che l'effettiva verifica tecnica del soddisfacimento della qualità richiesta non risulti fattibile; si è comunque deciso di definire dei "principi" generici che hanno guidato lo sviluppo.
+
+\begin{itemize}
+    \item \textbf{Correttezza} - si vuole costruire un software che fornisca all'utente le funzionalità che promette, producendo l'output corretto e atteso.
+    \item \textbf{Usabilità} - si intende sviluppare un'interfaccia sufficientemente reattiva e comprensibile, che abbia un design semplice e magari meno appetibile, ma comunque immediato e intuitivo. 
+    \item \textbf{Riutilizzabilità} - si intende costruire un software le cui componenti siano facilmente riutilizzabili per lo sviluppo di un altro applicativo che sia nello stesso dominio (software che sia in grado di salvare elementi sul dispositivo, ne tenga traccia, e permetta di aggiungerli, modificarli o toglierli attraverso un interfaccia grafica).
+\end{itemize}
+
+\end{document}
