@@ -7,10 +7,18 @@ Sono richiesti
 - [Java 8](https://www.java.com/it/download/)
 - [JDK 21](https://www.oracle.com/java/technologies/downloads/?er=221886#jdk21-windows)
 
-## Installazione
+## Donwload e Installazione
+Oltre ai requisiti, l'applicazione non ha bisogno di installazioni aggiuntive. Scaricare il file *.jar* dalla sezione *Asset* delle [Release](https://github.com/G-Chignoli/PantryManager/releases).
+
 ### Windows
+Posizionare il file scaricato nella cartella di destinazione preferita, aprire il prompt dei comandi (assicurarsi di essere nella stessa cartella del file *Pantrymanager_vX.X.X.jar*) e eseguire il comando  
+```
+java -jar Pantrymanager_vX.X.X.jar
+```
+*Sostituire X.X.X con la versione scaricata*
+
 ### Altri OS
-Attualmente non supportati.
+Non è stato testato su altri sistemi.
 
 ## Manuale Utente
 ![pantry_manual](https://github.com/user-attachments/assets/28a82747-e912-41d7-8788-c0bc3f8320ca)
@@ -54,3 +62,12 @@ Attualmente non supportati.
 
 ### Modificare la quantità dei Prodotti
 1. Utilizzare i tasti **+** e **-** ($${\color{Turquoise}13}$$) per aggiungere o togliere unità ($${\color{Turquoise}12}$$) al prodotto mostrato in $${\color{Turquoise}11}$$
+
+# Note
+L'applicazione crea il database all'interno della cartella 
+```
+/db/PANTRY.mv
+```
+relativamente a dove viene eseguito il *jar*. **Non cancellare/spostare la cartella o il file** o tutti i salvataggi dell'utente andranno persi. 
+
+Il database viene salvato in questa posizione per rendere più facile la cancellazione per gli utenti che vogliono solo una dimostrazione della funzionalità dell'applicazione. Nelle versioni successive la cartella di destinazione sarà posizionata in una directory più sicura. 
